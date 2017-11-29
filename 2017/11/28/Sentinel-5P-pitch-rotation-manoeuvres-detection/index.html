@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://stefanomattia.github.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_19_0.png">
 <meta property="og:image" content="http://stefanomattia.github.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_39_0.png">
 <meta property="og:image" content="http://stefanomattia.github.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_47_0.png">
-<meta property="og:updated_time" content="2017-11-29T08:43:23.048Z">
+<meta property="og:updated_time" content="2017-11-29T08:48:25.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P pitch rotation manoeuvres detection">
 <meta name="twitter:description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are goi">
@@ -360,7 +360,8 @@
       
         <p>In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  </p>
 <p>In this post we are going to try to outline a generalised way in Python to identify the pitch rotations occurring during the set of planned spacecraft manoeuvres. This will allow us to derive manoeuvres execution times and their duration.  </p>
-<p>The process under analysis can be considered a special case of a much broader statistical and numerical processing class of problem, called <a href="https://en.wikipedia.org/wiki/Step_detection" target="_blank" rel="external">step detection</a>, that is the process of finding abrupt changes (steps, jumps, shifts) in the mean level of a time series or signal.<br><a id="more"></a></p>
+<p>The process under analysis can be considered a special case of a much broader statistical and numerical processing class of problem, called <a href="https://en.wikipedia.org/wiki/Step_detection" target="_blank" rel="external">step detection</a>, that is the process of finding abrupt changes (steps, jumps, shifts) in the mean level of a time series or signal.</p>
+<a id="more"></a>
 <h2 id="Loading-the-data"><a href="#Loading-the-data" class="headerlink" title="Loading the data"></a>Loading the data</h2><p>Let’s start by importing our libraries and loading the data from our input data.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> netCDF4 <span class="keyword">as</span> nc</span><br><span class="line"><span class="keyword">import</span> dateutil.parser</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"><span class="keyword">from</span> scipy.signal <span class="keyword">import</span> savgol_filter</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
 <p>Our data are contained in a Sentinel-5P L1B product, containing both measurements and geolocation/instrument positioning data in a NetCDF4 file.<br>Let’s open it and extract the variable we are interested in: </p>
