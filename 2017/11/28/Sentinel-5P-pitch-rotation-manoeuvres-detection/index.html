@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_41_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_43_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
-<meta property="og:updated_time" content="2017-12-02T08:14:13.710Z">
+<meta property="og:updated_time" content="2017-12-06T13:47:59.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P pitch rotation manoeuvres detection">
 <meta name="twitter:description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are goi">
@@ -477,7 +477,7 @@
 </code></pre><p>That’s the end of the first gap in our <code>peak</code> array. If we “shift” the <code>peak</code> array to the left, by taking out the first element, we could then identify the beginning of the next gap: </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peaks[<span class="number">1</span>:][np.argwhere(np.diff(peaks) == <span class="number">270</span>)[<span class="number">0</span>][<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
 <pre><code>989
-</code></pre><p>Does it start to be clear how we could single out the beginning and ends of each peak?<br>Let’s then define our peaks’ begins and ends as follows:</p>
+</code></pre><p>Does it start to be clear how we could single out the beginnings and ends of each peak?<br>Let’s then define our peaks’ begins and ends as follows:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begins = peaks[<span class="number">1</span>:][gaps]</span><br><span class="line">ends = peaks[:<span class="number">-1</span>][gaps]</span><br><span class="line">print(begins)</span><br><span class="line">print(ends)</span><br></pre></td></tr></table></figure>
 <pre><code>[ 989 2326 2656]
 [ 719 1048 2386]
