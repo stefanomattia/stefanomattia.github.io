@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -66,7 +66,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Source Sans Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -150,7 +150,7 @@
 
 
 
-  <title>Space to Ground</title>
+  <title>Space to Ground</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -169,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
 
@@ -274,6 +274,165 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stefano Mattia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/" itemprop="url">The quest to find the closest ground pixel</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-12T15:09:42+01:00">
+                12-12-2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Earth-Observation/" itemprop="url" rel="index">
+                    <span itemprop="name">Earth Observation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/12/The-quest-to-find-the-closest-ground-pixel/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
+<p>I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.</p>
+<p>In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -640,7 +799,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -662,7 +821,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -895,6 +1054,45 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
 
   
 

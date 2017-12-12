@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2017-12-06T10:01:06.000Z</updated>
+  <updated>2017-12-12T15:21:28.469Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>The quest to find the closest ground pixel</title>
+    <link href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/"/>
+    <id>http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/</id>
+    <published>2017-12-12T14:09:42.000Z</published>
+    <updated>2017-12-12T15:21:28.469Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are &lt;em&gt;scanline&lt;/em&gt; (along track dimension) and &lt;em&gt;ground pixel&lt;/em&gt; (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  &lt;/p&gt;
+&lt;p&gt;I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.&lt;/p&gt;
+&lt;p&gt;In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Earth Observation" scheme="http://notes.stefanomattia.net/categories/Earth-Observation/"/>
+    
+    
+      <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
+    
+      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
+    
+      <category term="xarray" scheme="http://notes.stefanomattia.net/tags/xarray/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sentinel-5P irradiance measurement animation</title>
     <link href="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/"/>
     <id>http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/</id>
     <published>2017-12-05T16:12:13.000Z</published>
-    <updated>2017-12-06T10:01:06.000Z</updated>
+    <updated>2017-12-06T10:01:06.173Z</updated>
     
     <summary type="html">
     
@@ -50,7 +76,7 @@
     <link href="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/"/>
     <id>http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/</id>
     <published>2017-11-28T21:22:39.000Z</published>
-    <updated>2017-12-06T13:47:59.000Z</updated>
+    <updated>2017-12-06T13:47:59.088Z</updated>
     
     <summary type="html">
     
