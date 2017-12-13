@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2017-12-12T17:03:09.662Z</updated>
+  <updated>2017-12-12T17:03:09.000Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/"/>
     <id>http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/</id>
     <published>2017-12-12T14:09:42.000Z</published>
-    <updated>2017-12-12T17:03:09.662Z</updated>
+    <updated>2017-12-12T17:03:09.000Z</updated>
     
     <summary type="html">
     
@@ -47,14 +47,13 @@
     <link href="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/"/>
     <id>http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/</id>
     <published>2017-12-05T16:12:13.000Z</published>
-    <updated>2017-12-06T10:01:06.173Z</updated>
+    <updated>2017-12-13T08:15:48.076Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;In this post we are going to show how to use Matplotlib to display – directly into a Jupyter notebook! – an animation of the solar irradiance spectrum evolution during a Sentinel-5P limb measurement.  &lt;/p&gt;
-&lt;h2 id=&quot;Scientific-background&quot;&gt;&lt;a href=&quot;#Scientific-background&quot; class=&quot;headerlink&quot; title=&quot;Scientific background&quot;&gt;&lt;/a&gt;Scientific background&lt;/h2&gt;&lt;p&gt;As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  &lt;/p&gt;
+      &lt;p&gt;As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  &lt;/p&gt;
 &lt;p&gt;Simulations of atmospheric transmission spectra showed that the atmosphere is opaque at tangent altitudes below 15-10km, near the O&lt;sub&gt;2&lt;/sub&gt; A Band at 761 nm.&lt;br&gt;Measurements in this range, taken in a so-called solar occultation geometry, could potentially be used to detect residual out-of-band stray light effects.&lt;/p&gt;
-&lt;p&gt;In this post, we would like to plot the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O&lt;sub&gt;2&lt;/sub&gt; A Band absorption features occurring around 761 nm.&lt;/p&gt;
+&lt;p&gt;In this post, we are going to show how to use Matplotlib to display an animated plot of the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O&lt;sub&gt;2&lt;/sub&gt; A Band absorption features occurring around 761 nm.&lt;/p&gt;
     
     </summary>
     
@@ -76,7 +75,7 @@
     <link href="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/"/>
     <id>http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/</id>
     <published>2017-11-28T21:22:39.000Z</published>
-    <updated>2017-12-06T13:47:59.088Z</updated>
+    <updated>2017-12-06T13:47:59.000Z</updated>
     
     <summary type="html">
     

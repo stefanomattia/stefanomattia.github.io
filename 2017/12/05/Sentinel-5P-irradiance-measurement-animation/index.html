@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -107,20 +107,20 @@
 
 
 
-<meta name="description" content="In this post we are going to show how to use Matplotlib to display – directly into a Jupyter notebook! – an animation of the solar irradiance spectrum evolution during a Sentinel-5P limb measurement.">
+<meta name="description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
 <meta name="keywords" content="sentinel-5p,python,matplotlib,animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sentinel-5P irradiance measurement animation">
 <meta property="og:url" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/index.html">
 <meta property="og:site_name" content="Space to Ground">
-<meta property="og:description" content="In this post we are going to show how to use Matplotlib to display – directly into a Jupyter notebook! – an animation of the solar irradiance spectrum evolution during a Sentinel-5P limb measurement.">
+<meta property="og:description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_19_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_25_0.png">
-<meta property="og:updated_time" content="2017-12-06T10:01:06.173Z">
+<meta property="og:updated_time" content="2017-12-13T08:15:48.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P irradiance measurement animation">
-<meta name="twitter:description" content="In this post we are going to show how to use Matplotlib to display – directly into a Jupyter notebook! – an animation of the solar irradiance spectrum evolution during a Sentinel-5P limb measurement.">
+<meta name="twitter:description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
 <meta name="twitter:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_19_0.png">
 
 
@@ -157,7 +157,7 @@
 
 
 
-  <title>Sentinel-5P irradiance measurement animation | Space to Ground</title>
+  <title>Sentinel-5P irradiance measurement animation | Space to Ground</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -176,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -394,10 +394,9 @@
       
 
       
-        <p>In this post we are going to show how to use Matplotlib to display – directly into a Jupyter notebook! – an animation of the solar irradiance spectrum evolution during a Sentinel-5P limb measurement.  </p>
-<h2 id="Scientific-background"><a href="#Scientific-background" class="headerlink" title="Scientific background"></a>Scientific background</h2><p>As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  </p>
+        <p>As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  </p>
 <p>Simulations of atmospheric transmission spectra showed that the atmosphere is opaque at tangent altitudes below 15-10km, near the O<sub>2</sub> A Band at 761 nm.<br>Measurements in this range, taken in a so-called solar occultation geometry, could potentially be used to detect residual out-of-band stray light effects.</p>
-<p>In this post, we would like to plot the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O<sub>2</sub> A Band absorption features occurring around 761 nm.</p>
+<p>In this post, we are going to show how to use Matplotlib to display an animated plot of the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O<sub>2</sub> A Band absorption features occurring around 761 nm.</p>
 <a id="more"></a>
 <h2 id="Loading-the-data"><a href="#Loading-the-data" class="headerlink" title="Loading the data"></a>Loading the data</h2><p>Let’s import our favourite libraries and load the data from our input product.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dateutil.parser</span><br><span class="line"><span class="keyword">import</span> netCDF4 <span class="keyword">as</span> nc</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> animation</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> HTML</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join</span><br></pre></td></tr></table></figure>
@@ -5617,7 +5616,24 @@ YQAAAAEAAAAATGF2ZjU3LjU2LjEwMQ==
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 
