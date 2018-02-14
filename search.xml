@@ -187,7 +187,7 @@
         
         <tags>
             
-            <tag> r </tag>
+            <tag> rstats </tag>
             
             <tag> ggplot2 </tag>
             
@@ -5118,9 +5118,9 @@ YQAAAAEAAAAATGF2ZjU3LjU2LjEwMQ==
         
         <tags>
             
-            <tag> sentinel-5p </tag>
-            
             <tag> python </tag>
+            
+            <tag> sentinel-5p </tag>
             
             <tag> matplotlib </tag>
             
@@ -5268,11 +5268,11 @@ YQAAAAEAAAAATGF2ZjU3LjU2LjEwMQ==
         
         <tags>
             
-            <tag> sentinel-5p </tag>
-            
             <tag> python </tag>
             
             <tag> scipy </tag>
+            
+            <tag> sentinel-5p </tag>
             
             <tag> step-detection </tag>
             
