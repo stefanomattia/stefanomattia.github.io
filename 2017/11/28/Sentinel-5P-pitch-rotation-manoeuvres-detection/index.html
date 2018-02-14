@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="python,scipy,sentinel-5p,step-detection," />
+  <meta name="keywords" content="sentinel-5p,python,scipy,step-detection," />
 
 
 
@@ -108,17 +108,23 @@
 
 
 <meta name="description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are goi">
-<meta name="keywords" content="python,scipy,sentinel-5p,step-detection">
+<meta name="keywords" content="sentinel-5p,python,scipy,step-detection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sentinel-5P pitch rotation manoeuvres detection">
 <meta property="og:url" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/index.html">
 <meta property="og:site_name" content="Space to Ground">
 <meta property="og:description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are goi">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_15_0.png">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_19_0.png">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_41_0.png">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_43_0.png">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
 <meta property="og:updated_time" content="2017-12-06T13:47:59.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P pitch rotation manoeuvres detection">
 <meta name="twitter:description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are goi">
+<meta name="twitter:image" content="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_15_0.png">
 
 
 
@@ -415,14 +421,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">relatime_timestamps =\</span><br><span class="line">    np.array([time_reference+\</span><br><span class="line">              timedelta(milliseconds=int(observations.variables[<span class="string">'delta_time'</span>][<span class="number">0</span>, scanline])) </span><br><span class="line">              <span class="keyword">for</span> scanline <span class="keyword">in</span> range(len(solar_elevation_angle))])</span><br></pre></td></tr></table></figure>
 <h2 id="Plotting-the-data"><a href="#Plotting-the-data" class="headerlink" title="Plotting the data"></a>Plotting the data</h2><p>Let’s have a preliminary look at our solar elevation angle evolution:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.xlabel(<span class="string">'Scanline'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Solar elevation angle [deg]'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_15_0.png">
 <p>The four points where the slope changes identify the spacecraft pitch rotations. As we can see, the solar elevation angle evolution outside the spacecraft manoeuvres regions is pretty much linear as a function of time, and that should always be the case for this particular spacecraft (except for major failures).  </p>
 <p>We would like to derive a set of “representative” scanline indexes where the manoeuvres have taken place. Note that during each spacecraft manoeuvre, the slope change is obviously continuous, although discretised in our set of angle values. Therefore, it does not really make sense to try to pick out a single scanline where a manoeuvre has taken place. Our goal is rather to identify, for each manoeuvre, a “representative” scanline in the range of scanlines defining the interval of time where the manoeuvre occurred (e.g. some sort of middle value).</p>
 <h2 id="Filtering-and-processing-the-data"><a href="#Filtering-and-processing-the-data" class="headerlink" title="Filtering and processing the data"></a>Filtering and processing the data</h2><p>My first approach in trying to identify the changes in the curve’s slope was to compute the second derivative of the signal, clipping the high-frequency quantisation noise, smoothing the resulting curve with a gaussian filter, and picking the scanlines corresponding to the local maxima in the smoothed signal.<br>However, I was not satisfied with this approach, as I had to manually tune the clipping threshold values and the gaussian filter’s sigma parameter, to get the scanline indexes I was looking for. As you can imagine, this solution would not easily generalise to other cases.</p>
 <p>A much more resilient approach was proposed by <a href="https://stackoverflow.com/users/6655984/6-white-male" target="_blank" rel="external">6’ white male</a> on this brilliant answer to my <a href="https://stackoverflow.com/questions/47519626/using-numpy-scipy-to-identify-slope-changes-in-digital-signals" target="_blank" rel="external">original question on stackoverflow</a>, which entails using SciPy’s implementation of the <a href="https://en.wikipedia.org/wiki/Savitzky–Golay_filter" target="_blank" rel="external">Savitzky–Golay filter</a> to smooth out the second derivative of our signal and to consider the regions where the second derivative is “large” enough.</p>
 <p>Let’s have a look at the filtered signal:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window = <span class="number">101</span></span><br><span class="line">filtered_signal = savgol_filter(solar_elevation_angle, window_length=<span class="number">101</span>, </span><br><span class="line">                                polyorder=<span class="number">2</span>, deriv=<span class="number">2</span>)</span><br><span class="line">plt.plot(filtered_signal)</span><br><span class="line">plt.xlabel(<span class="string">'Scanline'</span>)</span><br><span class="line">plt.title(<span class="string">'Solar elevation angle - Smoothed 2nd derivative'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_19_0.png">
 <p>We want to identify the peaks’ indexes. To filter out any residual high-frequency quantisation noise, we are going to consider our peaks as the regions where the signal is greater than half of the absolute maximum value:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peaks = np.where(np.abs(filtered_signal) &gt; np.max(np.abs(filtered_signal))/<span class="number">2</span>)[<span class="number">0</span>]</span><br><span class="line">print(peaks)</span><br></pre></td></tr></table></figure>
 <pre><code>[ 659  660  661  662  663  664  665  666  667  668  669  670  671  672  673
@@ -494,10 +500,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detect_changes</span><span class="params">(input_signal, window)</span>:</span></span><br><span class="line">    filtered_signal = np.abs(savgol_filter(input_signal, </span><br><span class="line">                                           window_length=window, </span><br><span class="line">                                           polyorder=<span class="number">2</span>, </span><br><span class="line">                                           deriv=<span class="number">2</span>))</span><br><span class="line">    peaks = np.where(filtered_signal &gt; np.max(filtered_signal/<span class="number">2</span>))[<span class="number">0</span>]</span><br><span class="line">    gaps = np.diff(peaks) &gt; window</span><br><span class="line">    begins = np.insert(peaks[<span class="number">1</span>:][gaps], <span class="number">0</span>, peaks[<span class="number">0</span>])</span><br><span class="line">    ends = np.append(peaks[:<span class="number">-1</span>][gaps], peaks[<span class="number">-1</span>])</span><br><span class="line">    <span class="keyword">return</span> ((begins+ends)/<span class="number">2</span>).astype(np.int)</span><br></pre></td></tr></table></figure>
 <p>How does the <code>window</code> parameter impact the detection of changes in our input signal? We would like to keep it big enough to detect the real slope changes, but small enough to avoid smoothing out actual changes in our input signal.<br>It turns out that the algorithm is quite robust with respect to the choice of the <code>window</code> parameter, at least for this particular input signal: no matter what value we choose from 11 to 211, we get pretty consistent results:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> window <span class="keyword">in</span> range(<span class="number">11</span>,<span class="number">211</span>,<span class="number">2</span>):</span><br><span class="line">    slope_changes_idx = detect_changes(solar_elevation_angle, window)</span><br><span class="line">    plt.scatter(slope_changes_idx, slope_changes_idx)</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_41_0.png">
 <p>Let’s see how the identified scanlines fit in our plot:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">slope_changes_idx = detect_changes(solar_elevation_angle, window)</span><br><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.plot(slope_changes_idx, solar_elevation_angle[slope_changes_idx], <span class="string">'ro'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Scanline'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Solar elevation angle [deg]'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_43_0.png">
 <p>Perfect!</p>
 <p>Finding out at what time each pitch manoeuvre occurred is easy as pie. Remember we defined our <code>relative_timestamps</code> array containing the measurement time for each scaline? We can now use the <code>changes</code> array to index the <code>relative_timestamps</code> and retrieve the measurement time for our four scanlines:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">relatime_timestamps[slope_changes_idx]</span><br></pre></td></tr></table></figure>
@@ -511,7 +517,7 @@
 </code></pre><p>That’s some serious NumPy magic going on here!</p>
 <p>What about decorating our plot with some fancy labels?</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.plot(slope_changes_idx, solar_elevation_angle[slope_changes_idx], <span class="string">'ro'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># define relative offset for each label</span></span><br><span class="line">label_offset = np.array([[<span class="number">15</span>, <span class="number">25</span>], [<span class="number">35</span>, <span class="number">35</span>], [<span class="number">0</span>, <span class="number">25</span>], [<span class="number">-25</span>, <span class="number">-10</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, sl <span class="keyword">in</span> enumerate(slope_changes_idx):</span><br><span class="line">    plt.annotate(<span class="string">"&#123;&#125;"</span>.format(relatime_timestamps[sl].strftime(<span class="string">"%H:%M:%S"</span>)),</span><br><span class="line">                 xy=(slope_changes_idx[i], solar_elevation_angle[slope_changes_idx[i]]), </span><br><span class="line">                 xycoords=<span class="string">'data'</span>,</span><br><span class="line">                 xytext=label_offset[i], textcoords=<span class="string">'offset points'</span>,</span><br><span class="line">                 bbox=dict(boxstyle=<span class="string">'round, pad=0.3'</span>, fc=<span class="string">'orange'</span>, alpha=<span class="number">0.1</span>),</span><br><span class="line">                 arrowprops=dict(arrowstyle=<span class="string">"-|&gt;"</span>, connectionstyle=<span class="string">"arc3, rad=0.1"</span>),</span><br><span class="line">                 horizontalalignment=<span class="string">'right'</span>, verticalalignment=<span class="string">'bottom'</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'Scanline'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Solar elevation angle [deg]'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
 <p>Looks great!</p>
 <p>That’s it for now.<br>To summarise: we used a Savitzky–Golay smoothing filter on the second derivative of our variable of interest to identify changes in the slope of the curve. The proposed solution should be robust enough to generalise to similar problems.<br>It’s been a great learning exercise to dip my toes in the step-detection class of problems.</p>
 <p>The Jupyter notebook for this post is available on my <a href="https://github.com/stefanomattia/jupyter-notebooks/tree/master/earth-observation" target="_blank" rel="external">GitHub repository</a>.</p>
@@ -532,11 +538,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/sentinel-5p/" rel="tag"># sentinel-5p</a>
+          
             <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/scipy/" rel="tag"># scipy</a>
-          
-            <a href="/tags/sentinel-5p/" rel="tag"># sentinel-5p</a>
           
             <a href="/tags/step-detection/" rel="tag"># step-detection</a>
           

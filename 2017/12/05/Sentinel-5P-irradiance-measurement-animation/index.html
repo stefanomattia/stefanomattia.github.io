@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="python,sentinel-5p,matplotlib,animation," />
+  <meta name="keywords" content="sentinel-5p,python,matplotlib,animation," />
 
 
 
@@ -108,17 +108,20 @@
 
 
 <meta name="description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
-<meta name="keywords" content="python,sentinel-5p,matplotlib,animation">
+<meta name="keywords" content="sentinel-5p,python,matplotlib,animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sentinel-5P irradiance measurement animation">
 <meta property="og:url" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/index.html">
 <meta property="og:site_name" content="Space to Ground">
 <meta property="og:description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_19_0.png">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_25_0.png">
 <meta property="og:updated_time" content="2017-12-13T08:15:48.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P irradiance measurement animation">
 <meta name="twitter:description" content="As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level">
+<meta name="twitter:image" content="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_19_0.png">
 
 
 
@@ -425,7 +428,7 @@ filling on
 <pre><code>Spectral channel range: (254, 384)
 </code></pre><h2 id="Plotting-the-data"><a href="#Plotting-the-data" class="headerlink" title="Plotting the data"></a>Plotting the data</h2><p>Now that we know at which spectral channels we need to look at, let’s have a quick look at the irradiance level evolution across all scanlines, that is with respect to the spacecraft relative position to the sun.<br>For that, we are going to make use of Matplotlib’s <code>pcolormesh</code> function.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line">cax = ax.pcolormesh(irradiance[<span class="number">0</span>, :, PIXEL, sc_min:sc_max], cmap=plt.get_cmap(<span class="string">'inferno'</span>))</span><br><span class="line">ax.set_xticklabels(range(sc_min, sc_max, <span class="number">20</span>))</span><br><span class="line">ax.set_xlabel(<span class="string">'Spectral channel'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'Scanline'</span>)</span><br><span class="line">ax.set_title(<span class="string">"L1B irradiance - band 6"</span>)</span><br><span class="line">cbar = fig.colorbar(cax, ax=ax, extend=<span class="string">'both'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_19_0.png">
 <p>We want to focus our attention at what’s happening around scanline 2250, which seems to be around the time where the sun “sets” from the point of view of our instrument’s line of sight.</p>
 <p>We could then slice our original irradiance along the scanline and spectral channel axes. At the same time, we could improve our signal to noise ratio, by averaging measurements around our reference pixel. This will reduce our total number of dimensions by one.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SCANLINE_MIN, SCANLINE_MAX = (<span class="number">2200</span>, <span class="number">2340</span>)</span><br><span class="line">NUM_PIXEL_AVG = <span class="number">20</span> <span class="comment"># number of adjacent pixels to average, for noise reduction</span></span><br><span class="line"></span><br><span class="line">irradiance = irradiance[<span class="number">0</span>, </span><br><span class="line">                        SCANLINE_MIN:SCANLINE_MAX, </span><br><span class="line">                        PIXEL-NUM_PIXEL_AVG:PIXEL+NUM_PIXEL_AVG, </span><br><span class="line">                        sc_min:sc_max].mean(axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
@@ -433,7 +436,7 @@ filling on
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">calibrated_wavelength = calibrated_wavelength[<span class="number">0</span>,PIXEL,:]</span><br></pre></td></tr></table></figure>
 <p>Let’s now plot our averaged irradiance for a subset of scanlines:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line">STEP = <span class="number">12</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> sl <span class="keyword">in</span> range(<span class="number">0</span>, SCANLINE_MAX-SCANLINE_MIN, STEP):</span><br><span class="line">    lines = ax.plot(calibrated_wavelength[sc_min:sc_max], </span><br><span class="line">                    irradiance[sl,:], </span><br><span class="line">                    label=<span class="string">"Scanline &#123;&#125;"</span>.format(SCANLINE_MIN+sl))</span><br><span class="line"></span><br><span class="line">ax.grid(<span class="keyword">True</span>)</span><br><span class="line">ax.legend(bbox_to_anchor=[<span class="number">1.25</span>, <span class="number">1</span>], loc=<span class="string">'upper right'</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">'Wavelength (nm)'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">r'$Radiance (mol \cdot s^&#123;−1&#125; \cdot m^&#123;−2&#125; \cdot nm^&#123;−1&#125;)$'</span>)</span><br><span class="line">ax.set_title(<span class="string">"L1B irradiance - band 6 - scanlines [&#123;&#125;, &#123;&#125;]"</span>.format(SCANLINE_MIN, </span><br><span class="line">                                                                   SCANLINE_MAX))</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<img src="/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_25_0.png">
 <p>We can clearly notice how the irradiance gets squashed as the sun gradually drops out of sight. Also, the effect of the O<sub>2</sub> absorption is distinctly visible around 761nm.  </p>
 <p>How cool would it be to animate this sequence?</p>
 <h2 id="Animating-the-data"><a href="#Animating-the-data" class="headerlink" title="Animating the data"></a>Animating the data</h2><p>It turns out that we can easily setup animations in Matplotlib: we just need to set up our plot first, and then define a function specifying the frame to be plotted at the i<sub>th</sub> step in the animation.</p>
@@ -5217,9 +5220,9 @@ YQAAAAEAAAAATGF2ZjU3LjU2LjEwMQ==
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/sentinel-5p/" rel="tag"># sentinel-5p</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
           
             <a href="/tags/matplotlib/" rel="tag"># matplotlib</a>
           
