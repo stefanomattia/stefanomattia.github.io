@@ -288,6 +288,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stefano Mattia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/" itemprop="url">Plotting Sentinel-5P NetCDF products with R and ggplot2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-14T14:31:33+01:00">
+                14-02-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Earth-Observation/" itemprop="url" rel="index">
+                    <span itemprop="name">Earth Observation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>I recently started to look into the <a href="https://www.r-project.org" target="_blank" rel="external">R language</a>, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a <em>pythonic</em> way to do things.</p>
+<p>Anyway, one of the most effective ways to learn a new programming language is to try using it to solve familiar problems. And that is precisely what I have been doing in the past few days, looking into a fast and efficient way to plot some fresh <a href="http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Sentinel-5P/Satellite" target="_blank" rel="external">Sentinel-5P</a> <a href="http://www.tropomi.eu/data-products/nitrogen-dioxide" target="_blank" rel="external">NO<sub>2</sub></a> data over a world map.</p>
+<p>In this post, we are going to read the contents of several NetCDF4 products and turn them into a single data frame, where each row will contain an observation and the related geodetic coordinates. We are then going to <em>slice</em> the global data frame over a region of interest, and plot the correspondent data over a map with <a href="http://ggplot2.tidyverse.org" target="_blank" rel="external">ggplot2</a>. I am sure there are more clever and elegant ways to approach this task and I will make sure to document them in future posts.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -798,7 +957,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -820,7 +979,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -892,7 +1051,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
