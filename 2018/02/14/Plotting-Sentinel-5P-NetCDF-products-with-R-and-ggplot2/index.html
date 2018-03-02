@@ -107,21 +107,20 @@
 
 
 
-<meta name="description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences">
+<meta name="description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences w">
 <meta name="keywords" content="rstats,ggplot2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Plotting Sentinel-5P NetCDF products with R and ggplot2">
 <meta property="og:url" content="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/index.html">
 <meta property="og:site_name" content="Space to Ground">
-<meta property="og:description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences">
+<meta property="og:description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences w">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png">
-<meta property="og:image" content="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-14-1.png">
-<meta property="og:updated_time" content="2018-03-02T10:08:45.710Z">
+<meta property="og:updated_time" content="2018-03-02T13:33:02.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Plotting Sentinel-5P NetCDF products with R and ggplot2">
-<meta name="twitter:description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences">
+<meta name="twitter:description" content="I recently started to look into the R language, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences w">
 <meta name="twitter:image" content="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png">
 
 
@@ -395,8 +394,7 @@
       
 
       
-        <img src="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png">
-<p>I recently started to look into the <a href="https://www.r-project.org" target="_blank" rel="external">R language</a>, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a <em>pythonic</em> way to do things.</p>
+        <p>I recently started to look into the <a href="https://www.r-project.org" target="_blank" rel="external">R language</a>, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a <em>pythonic</em> way to do things.</p>
 <p>Anyway, one of the most effective ways to learn a new programming language is to try using it to solve familiar problems. And that is precisely what I have been doing in the past few days, looking into a fast and efficient way to plot some fresh <a href="http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Sentinel-5P/Satellite" target="_blank" rel="external">Sentinel-5P</a> <a href="http://www.tropomi.eu/data-products/nitrogen-dioxide" target="_blank" rel="external">NO<sub>2</sub></a> data over a world map.</p>
 <p>In this post, we are going to read the contents of several NetCDF4 products and turn them into a single data frame, where each row will contain an observation and the related geodetic coordinates. We are then going to <em>slice</em> the global data frame over a region of interest, and plot the correspondent data over a map with <a href="http://ggplot2.tidyverse.org" target="_blank" rel="external">ggplot2</a>. I am sure there are more clever and elegant ways to approach this task and I will make sure to document them in future posts.</p>
 <a id="more"></a>
