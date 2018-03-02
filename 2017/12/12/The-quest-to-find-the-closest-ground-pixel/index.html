@@ -107,22 +107,23 @@
 
 
 
-<meta name="description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Latit">
+<meta name="description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Lati">
 <meta name="keywords" content="python,scipy,xarray">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The quest to find the closest ground pixel">
 <meta property="og:url" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/index.html">
 <meta property="og:site_name" content="Space to Ground">
-<meta property="og:description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Latit">
+<meta property="og:description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Lati">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_8_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_29_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
-<meta property="og:updated_time" content="2017-12-21T19:58:40.000Z">
+<meta property="og:updated_time" content="2018-03-02T09:25:06.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The quest to find the closest ground pixel">
-<meta name="twitter:description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Latit">
-<meta name="twitter:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_8_0.png">
+<meta name="twitter:description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Lati">
+<meta name="twitter:image" content="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
 
 
 
@@ -395,7 +396,8 @@
       
 
       
-        <p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
+        <img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
+<p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
 <p>I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.</p>
 <p>In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.</p>
 <a id="more"></a>

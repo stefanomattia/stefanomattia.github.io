@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2018-02-20T10:02:14.330Z</updated>
+  <updated>2018-03-02T10:08:45.710Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -21,11 +21,12 @@
     <link href="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/"/>
     <id>http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/</id>
     <published>2018-02-14T13:31:33.000Z</published>
-    <updated>2018-02-20T10:02:14.330Z</updated>
+    <updated>2018-03-02T10:08:45.710Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;I recently started to look into the &lt;a href=&quot;https://www.r-project.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;R language&lt;/a&gt;, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a &lt;em&gt;pythonic&lt;/em&gt; way to do things.&lt;/p&gt;
+      &lt;img src=&quot;/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png&quot;&gt;
+&lt;p&gt;I recently started to look into the &lt;a href=&quot;https://www.r-project.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;R language&lt;/a&gt;, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a &lt;em&gt;pythonic&lt;/em&gt; way to do things.&lt;/p&gt;
 &lt;p&gt;Anyway, one of the most effective ways to learn a new programming language is to try using it to solve familiar problems. And that is precisely what I have been doing in the past few days, looking into a fast and efficient way to plot some fresh &lt;a href=&quot;http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Sentinel-5P/Satellite&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Sentinel-5P&lt;/a&gt; &lt;a href=&quot;http://www.tropomi.eu/data-products/nitrogen-dioxide&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NO&lt;sub&gt;2&lt;/sub&gt;&lt;/a&gt; data over a world map.&lt;/p&gt;
 &lt;p&gt;In this post, we are going to read the contents of several NetCDF4 products and turn them into a single data frame, where each row will contain an observation and the related geodetic coordinates. We are then going to &lt;em&gt;slice&lt;/em&gt; the global data frame over a region of interest, and plot the correspondent data over a map with &lt;a href=&quot;http://ggplot2.tidyverse.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ggplot2&lt;/a&gt;. I am sure there are more clever and elegant ways to approach this task and I will make sure to document them in future posts.&lt;/p&gt;
     
@@ -45,11 +46,12 @@
     <link href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/"/>
     <id>http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/</id>
     <published>2017-12-12T14:09:42.000Z</published>
-    <updated>2017-12-21T19:58:40.000Z</updated>
+    <updated>2018-03-02T09:25:06.852Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are &lt;em&gt;scanline&lt;/em&gt; (along track dimension) and &lt;em&gt;ground pixel&lt;/em&gt; (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  &lt;/p&gt;
+      &lt;img src=&quot;/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png&quot;&gt;
+&lt;p&gt;The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are &lt;em&gt;scanline&lt;/em&gt; (along track dimension) and &lt;em&gt;ground pixel&lt;/em&gt; (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  &lt;/p&gt;
 &lt;p&gt;I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.&lt;/p&gt;
 &lt;p&gt;In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.&lt;/p&gt;
     
@@ -71,11 +73,12 @@
     <link href="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/"/>
     <id>http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/</id>
     <published>2017-12-05T16:12:13.000Z</published>
-    <updated>2017-12-13T08:15:48.076Z</updated>
+    <updated>2018-03-02T10:08:23.755Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  &lt;/p&gt;
+      &lt;img src=&quot;/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_25_0.png&quot;&gt;
+&lt;p&gt;As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  &lt;/p&gt;
 &lt;p&gt;Simulations of atmospheric transmission spectra showed that the atmosphere is opaque at tangent altitudes below 15-10km, near the O&lt;sub&gt;2&lt;/sub&gt; A Band at 761 nm.&lt;br&gt;Measurements in this range, taken in a so-called solar occultation geometry, could potentially be used to detect residual out-of-band stray light effects.&lt;/p&gt;
 &lt;p&gt;In this post, we are going to show how to use Matplotlib to display an animated plot of the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O&lt;sub&gt;2&lt;/sub&gt; A Band absorption features occurring around 761 nm.&lt;/p&gt;
     
@@ -99,11 +102,12 @@
     <link href="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/"/>
     <id>http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/</id>
     <published>2017-11-28T21:22:39.000Z</published>
-    <updated>2017-12-06T13:47:59.088Z</updated>
+    <updated>2018-03-02T10:07:34.861Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  &lt;/p&gt;
+      &lt;img src=&quot;/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png&quot;&gt;
+&lt;p&gt;In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  &lt;/p&gt;
 &lt;p&gt;In this post we are going to try to outline a generalised way in Python to identify the pitch rotations occurring during the set of planned spacecraft manoeuvres. This will allow us to derive manoeuvres execution times and their duration.  &lt;/p&gt;
 &lt;p&gt;The process under analysis can be considered a special case of a much broader statistical and numerical processing class of problems, called &lt;a href=&quot;https://en.wikipedia.org/wiki/Step_detection&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;step detection&lt;/a&gt;, that is the process of finding abrupt changes (steps, jumps, shifts) in the mean level of a time series or signal.&lt;/p&gt;
     

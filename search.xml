@@ -5,7 +5,8 @@
     <entry>
       <title><![CDATA[Plotting Sentinel-5P NetCDF products with R and ggplot2]]></title>
       <url>/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/</url>
-      <content type="html"><![CDATA[<p>I recently started to look into the <a href="https://www.r-project.org" target="_blank" rel="external">R language</a>, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a <em>pythonic</em> way to do things.</p>
+      <content type="html"><![CDATA[<img src="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/unnamed-chunk-13-1.png">
+<p>I recently started to look into the <a href="https://www.r-project.org" target="_blank" rel="external">R language</a>, as part of my growing interest in statistical learning and data analysis. As a first impression, I felt a bit overwhelmed by the number of differences with Python, the vast amount of oddly named libraries, and the many different ways to address a given problem, as opposed to Python, where there is usually a general consensus about a <em>pythonic</em> way to do things.</p>
 <p>Anyway, one of the most effective ways to learn a new programming language is to try using it to solve familiar problems. And that is precisely what I have been doing in the past few days, looking into a fast and efficient way to plot some fresh <a href="http://www.esa.int/Our_Activities/Observing_the_Earth/Copernicus/Sentinel-5P/Satellite" target="_blank" rel="external">Sentinel-5P</a> <a href="http://www.tropomi.eu/data-products/nitrogen-dioxide" target="_blank" rel="external">NO<sub>2</sub></a> data over a world map.</p>
 <p>In this post, we are going to read the contents of several NetCDF4 products and turn them into a single data frame, where each row will contain an observation and the related geodetic coordinates. We are then going to <em>slice</em> the global data frame over a region of interest, and plot the correspondent data over a map with <a href="http://ggplot2.tidyverse.org" target="_blank" rel="external">ggplot2</a>. I am sure there are more clever and elegant ways to approach this task and I will make sure to document them in future posts.</p>
 <a id="more"></a>
@@ -199,7 +200,8 @@
     <entry>
       <title><![CDATA[The quest to find the closest ground pixel]]></title>
       <url>/2017/12/12/The-quest-to-find-the-closest-ground-pixel/</url>
-      <content type="html"><![CDATA[<p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
+      <content type="html"><![CDATA[<img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
+<p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
 <p>I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.</p>
 <p>In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.</p>
 <a id="more"></a>
@@ -299,7 +301,8 @@ Dimensions without coordinates: pixel
     <entry>
       <title><![CDATA[Sentinel-5P irradiance measurement animation]]></title>
       <url>/2017/12/05/Sentinel-5P-irradiance-measurement-animation/</url>
-      <content type="html"><![CDATA[<p>As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  </p>
+      <content type="html"><![CDATA[<img src="/2017/12/05/Sentinel-5P-irradiance-measurement-animation/output_25_0.png">
+<p>As part of the commissioning phase of the TROPOMI instrument on board of the ESA’s Sentinel-5P spacecraft, a dedicated radiometric measurement was put in place to estimate radiometric errors in Level 1B products based on S5P early in-flight calibration measurements.  </p>
 <p>Simulations of atmospheric transmission spectra showed that the atmosphere is opaque at tangent altitudes below 15-10km, near the O<sub>2</sub> A Band at 761 nm.<br>Measurements in this range, taken in a so-called solar occultation geometry, could potentially be used to detect residual out-of-band stray light effects.</p>
 <p>In this post, we are going to show how to use Matplotlib to display an animated plot of the solar irradiance spectra detected during this dedicated solar calibration measurement, as a function of time – which roughly translates in decreasing limb tangent heights — and observe the strong O<sub>2</sub> A Band absorption features occurring around 761 nm.</p>
 <a id="more"></a>
@@ -5134,7 +5137,8 @@ YQAAAAEAAAAATGF2ZjU3LjU2LjEwMQ==
     <entry>
       <title><![CDATA[Sentinel-5P pitch rotation manoeuvres detection]]></title>
       <url>/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/</url>
-      <content type="html"><![CDATA[<p>In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  </p>
+      <content type="html"><![CDATA[<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
+<p>In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  </p>
 <p>In this post we are going to try to outline a generalised way in Python to identify the pitch rotations occurring during the set of planned spacecraft manoeuvres. This will allow us to derive manoeuvres execution times and their duration.  </p>
 <p>The process under analysis can be considered a special case of a much broader statistical and numerical processing class of problems, called <a href="https://en.wikipedia.org/wiki/Step_detection" target="_blank" rel="external">step detection</a>, that is the process of finding abrupt changes (steps, jumps, shifts) in the mean level of a time series or signal.</p>
 <a id="more"></a>
