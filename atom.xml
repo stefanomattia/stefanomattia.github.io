@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2018-03-02T13:33:02.035Z</updated>
+  <updated>2018-03-27T12:57:35.443Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mount Sinabung eruption as seen by Sentinel-5P</title>
+    <link href="http://notes.stefanomattia.net/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/"/>
+    <id>http://notes.stefanomattia.net/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/</id>
+    <published>2018-03-27T12:55:28.000Z</published>
+    <updated>2018-03-27T12:57:35.443Z</updated>
+    
+    <summary type="html">
+    
+      &lt;img src=&quot;/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png&quot;&gt;
+&lt;p&gt;On February 19, 2018, Indonesia’s Mount Sinabug, a stratovolcano on the island of Sumatra, erupted violently, spewing ash at least 5 to 7 kilometers into the air over Indonesia.  &lt;/p&gt;
+&lt;p&gt;The erupting lava dome obliterated a chunk of the peak as it erupted. Plumes of hot gas and ash rode down the volcano’s summit and spread out in a 5-kilometer diameter, coating surrounding villages in ash. &lt;/p&gt;
+&lt;p&gt;In this post, we are going to see how this event has been recorded by the &lt;a href=&quot;http://www.tropomi.eu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TROPOMI&lt;/a&gt; instrument on board of &lt;a href=&quot;http://www.esa.int&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ESA&lt;/a&gt;‘s Sentinel-5P earth observation satellite, using Python, xarray, and cartopy &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Earth Observation" scheme="http://notes.stefanomattia.net/categories/Earth-Observation/"/>
+    
+    
+      <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
+    
+      <category term="xarray" scheme="http://notes.stefanomattia.net/tags/xarray/"/>
+    
+      <category term="cartopy" scheme="http://notes.stefanomattia.net/tags/cartopy/"/>
+    
+  </entry>
   
   <entry>
     <title>Plotting Sentinel-5P NetCDF products with R and ggplot2</title>
@@ -61,9 +88,9 @@
     
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
     
-      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
-    
       <category term="xarray" scheme="http://notes.stefanomattia.net/tags/xarray/"/>
+    
+      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
     
   </entry>
   
@@ -85,9 +112,9 @@
       <category term="Earth Observation" scheme="http://notes.stefanomattia.net/categories/Earth-Observation/"/>
     
     
-      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
-    
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
+    
+      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
     
       <category term="matplotlib" scheme="http://notes.stefanomattia.net/tags/matplotlib/"/>
     
@@ -114,11 +141,11 @@
       <category term="Earth Observation" scheme="http://notes.stefanomattia.net/categories/Earth-Observation/"/>
     
     
-      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
-    
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
     
       <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
+    
+      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
     
       <category term="step-detection" scheme="http://notes.stefanomattia.net/tags/step-detection/"/>
     
