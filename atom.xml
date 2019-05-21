@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2018-03-27T13:34:09.873Z</updated>
+  <updated>2019-05-21T11:45:42.706Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -17,11 +17,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Sentinel-5P S-NPP and CH4 products joint plot</title>
+    <link href="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/"/>
+    <id>http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/</id>
+    <published>2019-05-21T11:37:26.000Z</published>
+    <updated>2019-05-21T11:45:42.706Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;img src=&quot;/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png&quot;&gt;
+&lt;p&gt;In this post, we are going to see how to plot two
+        
+      
+    
+    </summary>
+    
+      <category term="Earth Observation" scheme="http://notes.stefanomattia.net/categories/Earth-Observation/"/>
+    
+    
+      <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
+    
+      <category term="xarray" scheme="http://notes.stefanomattia.net/tags/xarray/"/>
+    
+      <category term="cartopy" scheme="http://notes.stefanomattia.net/tags/cartopy/"/>
+    
+      <category term="matplotlib" scheme="http://notes.stefanomattia.net/tags/matplotlib/"/>
+    
+      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mount Sinabung eruption as seen by Sentinel-5P</title>
     <link href="http://notes.stefanomattia.net/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/"/>
     <id>http://notes.stefanomattia.net/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/</id>
     <published>2018-03-27T12:55:28.000Z</published>
-    <updated>2018-03-27T13:34:09.873Z</updated>
+    <updated>2018-03-27T13:34:09.000Z</updated>
     
     <summary type="html">
     
@@ -48,7 +83,7 @@
     <link href="http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/"/>
     <id>http://notes.stefanomattia.net/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/</id>
     <published>2018-02-14T13:31:33.000Z</published>
-    <updated>2018-03-02T13:33:02.035Z</updated>
+    <updated>2018-03-02T13:33:02.000Z</updated>
     
     <summary type="html">
     
@@ -72,7 +107,7 @@
     <link href="http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/"/>
     <id>http://notes.stefanomattia.net/2017/12/12/The-quest-to-find-the-closest-ground-pixel/</id>
     <published>2017-12-12T14:09:42.000Z</published>
-    <updated>2018-03-02T09:25:06.852Z</updated>
+    <updated>2018-03-02T09:25:06.000Z</updated>
     
     <summary type="html">
     
@@ -99,7 +134,7 @@
     <link href="http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/"/>
     <id>http://notes.stefanomattia.net/2017/12/05/Sentinel-5P-irradiance-measurement-animation/</id>
     <published>2017-12-05T16:12:13.000Z</published>
-    <updated>2018-03-02T13:33:12.537Z</updated>
+    <updated>2018-03-02T13:33:12.000Z</updated>
     
     <summary type="html">
     
@@ -114,9 +149,9 @@
     
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
     
-      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
-    
       <category term="matplotlib" scheme="http://notes.stefanomattia.net/tags/matplotlib/"/>
+    
+      <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
     
       <category term="animation" scheme="http://notes.stefanomattia.net/tags/animation/"/>
     
@@ -127,7 +162,7 @@
     <link href="http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/"/>
     <id>http://notes.stefanomattia.net/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/</id>
     <published>2017-11-28T21:22:39.000Z</published>
-    <updated>2018-03-02T10:07:34.861Z</updated>
+    <updated>2018-03-02T10:07:34.000Z</updated>
     
     <summary type="html">
     
@@ -143,9 +178,9 @@
     
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
     
-      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
-    
       <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
+    
+      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
     
       <category term="step-detection" scheme="http://notes.stefanomattia.net/tags/step-detection/"/>
     
