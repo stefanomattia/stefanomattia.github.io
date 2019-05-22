@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://notes.stefanomattia.net/"/>
-  <updated>2019-05-21T11:47:09.409Z</updated>
+  <updated>2019-05-22T07:57:04.242Z</updated>
   <id>http://notes.stefanomattia.net/</id>
   
   <author>
@@ -21,12 +21,12 @@
     <link href="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/"/>
     <id>http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/</id>
     <published>2019-05-21T11:37:26.000Z</published>
-    <updated>2019-05-21T11:47:09.409Z</updated>
+    <updated>2019-05-22T07:57:04.242Z</updated>
     
     <summary type="html">
     
       &lt;img src=&quot;/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png&quot;&gt;
-&lt;p&gt;In this post, we are going to see how to plot two different Sentinel-5P products on the same geometric aerea.  &lt;/p&gt;
+&lt;p&gt;In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.  &lt;/p&gt;
 &lt;p&gt;The products we are going to plot are the cloud product from the &lt;a href=&quot;https://ncc.nesdis.noaa.gov/VIIRS/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;VIIRS instrument&lt;/a&gt; on Suomi-NPP, regridded on the TROPOMI grid, and the CH4 product from &lt;a href=&quot;http://tropomi.eu&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TROPOMI&lt;/a&gt;.  &lt;/p&gt;
 &lt;p&gt;The CH4 measurements must be acquired on land and cloud free pixels only, and this is something we can visually check by superimposing the two plots.  &lt;/p&gt;
 &lt;p&gt;To format our plot, we are going to make use of Python, xarray, cartopy, and matplotlib.&lt;/p&gt;
@@ -175,9 +175,9 @@
     
       <category term="python" scheme="http://notes.stefanomattia.net/tags/python/"/>
     
-      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
-    
       <category term="sentinel-5p" scheme="http://notes.stefanomattia.net/tags/sentinel-5p/"/>
+    
+      <category term="scipy" scheme="http://notes.stefanomattia.net/tags/scipy/"/>
     
       <category term="step-detection" scheme="http://notes.stefanomattia.net/tags/step-detection/"/>
     

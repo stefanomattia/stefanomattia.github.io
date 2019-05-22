@@ -107,21 +107,21 @@
 
 
 
-<meta name="description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geometric aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on Su">
+<meta name="description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on S">
 <meta name="keywords" content="python,xarray,cartopy,matplotlib,sentinel-5p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sentinel-5P S-NPP and CH4 products joint plot">
 <meta property="og:url" content="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/index.html">
 <meta property="og:site_name" content="Space to Ground">
-<meta property="og:description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geometric aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on Su">
+<meta property="og:description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on S">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_18_0.png">
 <meta property="og:image" content="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
-<meta property="og:updated_time" content="2019-05-21T11:47:09.409Z">
+<meta property="og:updated_time" content="2019-05-22T07:57:04.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sentinel-5P S-NPP and CH4 products joint plot">
-<meta name="twitter:description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geometric aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on Su">
+<meta name="twitter:description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on S">
 <meta name="twitter:image" content="http://notes.stefanomattia.net/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
 
 
@@ -396,7 +396,7 @@
 
       
         <img src="/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
-<p>In this post, we are going to see how to plot two different Sentinel-5P products on the same geometric aerea.  </p>
+<p>In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.  </p>
 <p>The products we are going to plot are the cloud product from the <a href="https://ncc.nesdis.noaa.gov/VIIRS/" target="_blank" rel="external">VIIRS instrument</a> on Suomi-NPP, regridded on the TROPOMI grid, and the CH4 product from <a href="http://tropomi.eu" target="_blank" rel="external">TROPOMI</a>.  </p>
 <p>The CH4 measurements must be acquired on land and cloud free pixels only, and this is something we can visually check by superimposing the two plots.  </p>
 <p>To format our plot, we are going to make use of Python, xarray, cartopy, and matplotlib.</p>
@@ -414,7 +414,7 @@ Number of S-NPP files: 1
 <pre><code>/Users/smattia/src/s5p/products/SNPP_CH4_joint_plots/sron_data/S5P_OFFL_L2__CH4____20180225T185002_20180225T203133_01921_01_001400_20180226T012808.nc
 /Users/smattia/src/s5p/products/SNPP_CH4_joint_plots/sron_data/S5P_OFFL_L2__NP_BD7_20180225T185002_20180225T203133_01921_01_001200_20180302T160629.nc
 </code></pre><p>Let’s import our data into two different xarray’s datasets. </p>
-<p>From the CH4 we will need the the <code>methane_mixing_ratio</code> variable and the latitude/longitude coordinates, both included in the <code>PRODUCT</code> group in the netCDF file:</p>
+<p>From the CH4 we will need the <code>methane_mixing_ratio</code> variable and the latitude/longitude coordinates, both included in the <code>PRODUCT</code> group in the netCDF file:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch4 = xr.open_dataset(ch4_input_product, group=<span class="string">"/PRODUCT"</span>)</span><br><span class="line">ch4</span><br></pre></td></tr></table></figure>
 <pre><code>&lt;xarray.Dataset&gt;
 Dimensions:                              (corner: 4, ground_pixel: 215, layer: 12, level: 13, scanline: 3246, time: 1)
