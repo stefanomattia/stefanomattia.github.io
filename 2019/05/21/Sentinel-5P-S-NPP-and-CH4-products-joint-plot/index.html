@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sentinel-5P S-NPP and CH4 products joint plot">
+<meta property="og:url" content="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/index.html">
+<meta property="og:site_name" content="Space to Ground">
+<meta property="og:description" content="In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.   The products we are going to plot are the cloud product from the VIIRS instrument on">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
+<meta property="og:image" content="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_18_0.png">
+<meta property="og:image" content="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
+<meta property="article:published_time" content="2019-05-21T11:37:26.000Z">
+<meta property="article:modified_time" content="2022-12-15T14:12:51.692Z">
+<meta property="article:author" content="Stefano Mattia">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="xarray">
+<meta property="article:tag" content="cartopy">
+<meta property="article:tag" content="sentinel-5p">
+<meta property="article:tag" content="matplotlib">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png">
+
+
+<link rel="canonical" href="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/","path":"2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/","title":"Sentinel-5P S-NPP and CH4 products joint plot"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Sentinel-5P S-NPP and CH4 products joint plot | Space to Ground</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Space to Ground</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Notes from an earth observation engineer's life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment-configuration"><span class="nav-number">1.</span> <span class="nav-text">Environment configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reading-the-data"><span class="nav-number">2.</span> <span class="nav-text">Reading the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Processing-the-Cloud-Mask"><span class="nav-number">3.</span> <span class="nav-text">Processing the Cloud Mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plotting-the-data"><span class="nav-number">4.</span> <span class="nav-text">Plotting the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stefano Mattia</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stefanomattia" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stefanomattia" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stefano Mattia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Sentinel-5P S-NPP and CH4 products joint plot | Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Sentinel-5P S-NPP and CH4 products joint plot
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-05-21 13:37:26" itemprop="dateCreated datePublished" datetime="2019-05-21T13:37:26+02:00">2019-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-12-15 15:12:51" itemprop="dateModified" datetime="2022-12-15T15:12:51+01:00">2022-12-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Earth-Observation/" itemprop="url" rel="index"><span itemprop="name">Earth Observation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png" class="">
+
+<p>In this post, we are going to see how to plot two different Sentinel-5P products on the same geographic aerea.  </p>
+<p>The products we are going to plot are the cloud product from the <a target="_blank" rel="noopener" href="https://ncc.nesdis.noaa.gov/VIIRS/">VIIRS instrument</a> on Suomi-NPP, regridded on the TROPOMI grid, and the CH4 product from <a target="_blank" rel="noopener" href="http://tropomi.eu/">TROPOMI</a>.  </p>
+<p>The CH4 measurements must be acquired on land and cloud free pixels only, and this is something we can visually check by superimposing the two plots.  </p>
+<p>To format our plot, we are going to make use of Python, xarray, cartopy, and matplotlib.</p>
+<span id="more"></span>
+
+
+<h2 id="Environment-configuration"><a href="#Environment-configuration" class="headerlink" title="Environment configuration"></a>Environment configuration</h2><p>Let’s import our libraries:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> xarray <span class="keyword">as</span> xr</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> rcParams</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.axes_grid1 <span class="keyword">import</span> make_axes_locatable</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cartopy.crs <span class="keyword">as</span> ccrs</span><br><span class="line"><span class="keyword">import</span> cartopy.feature <span class="keyword">as</span> cfeature</span><br><span class="line"><span class="keyword">from</span> cartopy.mpl.gridliner <span class="keyword">import</span> LONGITUDE_FORMATTER, LATITUDE_FORMATTER</span><br><span class="line"><span class="keyword">from</span> cartopy.feature <span class="keyword">import</span> NaturalEarthFeature</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> glob <span class="keyword">import</span> iglob</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+<p>Let’s give our plot a bit more of an ESA look by using the ESA font:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># define font family for plots</span></span><br><span class="line">rcParams[<span class="string">&#x27;font.family&#x27;</span>] = <span class="string">&#x27;NotesEsa&#x27;</span></span><br><span class="line">rcParams[<span class="string">&#x27;font.size&#x27;</span>] = <span class="number">14</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reading-the-data"><a href="#Reading-the-data" class="headerlink" title="Reading the data"></a>Reading the data</h2><p>Sometimes, I collect a huge number of products in a slightly unorganised and chaotic directory tree. The command below will help in finding out how many S-NPP and CH4 products are available. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">input_files_dir = <span class="string">&quot;/Users/smattia/src/s5p/products/SNPP_CH4_joint_plots/sron_data/&quot;</span></span><br><span class="line"></span><br><span class="line">ch4_input_files = <span class="built_in">sorted</span>(<span class="built_in">list</span>(iglob(join(input_files_dir, <span class="string">&#x27;**&#x27;</span>, <span class="string">&#x27;*CH4*.nc&#x27;</span>), recursive=<span class="literal">True</span>)))</span><br><span class="line">snpp_input_files = <span class="built_in">sorted</span>(<span class="built_in">list</span>(iglob(join(input_files_dir, <span class="string">&#x27;**&#x27;</span>, <span class="string">&#x27;*_NP_*.nc&#x27;</span>), recursive=<span class="literal">True</span>)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Number of CH4 input files: &#123;&#125;\nNumber of S-NPP files: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">    <span class="built_in">len</span>(ch4_input_files),</span><br><span class="line">    <span class="built_in">len</span>(snpp_input_files)))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Number of CH4 input files: 1
+Number of S-NPP files: 1
+</code></pre>
+<p>In this case, I only have one CH4 and one S-NPP product:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ch4_input_product = ch4_input_files[<span class="number">0</span>]</span><br><span class="line">snpp_input_product = snpp_input_files[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ch4_input_product)</span><br><span class="line"><span class="built_in">print</span>(snpp_input_product)</span><br></pre></td></tr></table></figure>
+
+<pre><code>/Users/smattia/src/s5p/products/SNPP_CH4_joint_plots/sron_data/S5P_OFFL_L2__CH4____20180225T185002_20180225T203133_01921_01_001400_20180226T012808.nc
+/Users/smattia/src/s5p/products/SNPP_CH4_joint_plots/sron_data/S5P_OFFL_L2__NP_BD7_20180225T185002_20180225T203133_01921_01_001200_20180302T160629.nc
+</code></pre>
+<p>Let’s import our data into two different xarray’s datasets. </p>
+<p>From the CH4 we will need the <code>methane_mixing_ratio</code> variable and the latitude&#x2F;longitude coordinates, both included in the <code>PRODUCT</code> group in the netCDF file:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch4 = xr.open_dataset(ch4_input_product, group=<span class="string">&quot;/PRODUCT&quot;</span>)</span><br><span class="line">ch4</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>&lt;xarray.Dataset&gt;
+Dimensions:                              (corner: 4, ground_pixel: 215, layer: 12, level: 13, scanline: 3246, time: 1)
+Coordinates:
+  * scanline                             (scanline) float64 0.0 ... 3.245e+03
+  * ground_pixel                         (ground_pixel) float64 0.0 ... 214.0
+  * time                                 (time) datetime64[ns] 2018-02-25
+  * corner                               (corner) float64 0.0 1.0 2.0 3.0
+  * layer                                (layer) float64 0.0 1.0 ... 10.0 11.0
+  * level                                (level) float64 0.0 1.0 ... 11.0 12.0
+    latitude                             (time, scanline, ground_pixel) float32 ...
+    longitude                            (time, scanline, ground_pixel) float32 ...
+Data variables:
+    delta_time                           (time, scanline) timedelta64[ns] ...
+    time_utc                             (time, scanline) object ...
+    qa_value                             (time, scanline, ground_pixel) float32 ...
+    methane_mixing_ratio                 (time, scanline, ground_pixel) float32 ...
+    methane_mixing_ratio_precision       (time, scanline, ground_pixel) float32 ...
+    methane_mixing_ratio_bias_corrected  (time, scanline, ground_pixel) float32 ...
+</code></pre>
+<h2 id="Processing-the-Cloud-Mask"><a href="#Processing-the-Cloud-Mask" class="headerlink" title="Processing the Cloud Mask"></a>Processing the Cloud Mask</h2><p>For the VIIRS product, we will need the geolocation information from the the <code>GEODATA</code> group and the actual cloud coverage information from the <code>VIIRSDATA</code> group. We can merge the two groups into a single dataset using xarray:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">viirsdata = xr.open_dataset(snpp_input_product, group=<span class="string">&#x27;/BAND7_NPPC/STANDARD_MODE/VIIRSDATA&#x27;</span>)</span><br><span class="line">geodata = xr.open_dataset(snpp_input_product, group=<span class="string">&#x27;/BAND7_NPPC/STANDARD_MODE/GEODATA&#x27;</span>)</span><br><span class="line">snpp = xr.Dataset.merge(viirsdata, geodata)</span><br><span class="line">snpp</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>&lt;xarray.Dataset&gt;
+Dimensions:                     (ground_pixel: 215, ncorner: 4, scaled_field_of_view: 4, scanline: 3246, time: 1)
+Coordinates:
+  * ground_pixel                (ground_pixel) int64 0 1 2 3 ... 211 212 213 214
+  * scanline                    (scanline) int64 0 1 2 3 ... 3242 3243 3244 3245
+  * time                        (time) datetime64[ns] 2018-02-25
+  * scaled_field_of_view        (scaled_field_of_view) int32 0 1 2 3
+    latitude                    (time, scanline, ground_pixel) float32 ...
+    longitude                   (time, scanline, ground_pixel) float32 ...
+Dimensions without coordinates: ncorner
+Data variables:
+    delta_time                  (time, scanline) datetime64[ns] ...
+    scaled_field_of_view_ymin   (scaled_field_of_view) float32 ...
+    scaled_field_of_view_ymax   (scaled_field_of_view) float32 ...
+    scaled_field_of_view_zmin   (scaled_field_of_view) float32 ...
+    scaled_field_of_view_zmax   (scaled_field_of_view) float32 ...
+    viirs_delta_time            (time, scanline, ground_pixel) float32 ...
+    viirs_viewing_zenith_angle  (time, scanline, ground_pixel) float32 ...
+    vcm_confidently_cloudy      (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    vcm_probably_cloudy         (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    vcm_probably_clear          (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    vcm_confidently_clear       (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band07_srf_mean             (time, scanline, ground_pixel) float32 ...
+    band07_srf_coverage         (time, scanline, ground_pixel) float32 ...
+    band07_fov_mean             (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band07_fov_stdev            (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band07_fov_nvalid           (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band09_srf_mean             (time, scanline, ground_pixel) float32 ...
+    band09_srf_coverage         (time, scanline, ground_pixel) float32 ...
+    band09_fov_mean             (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band09_fov_stdev            (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band09_fov_nvalid           (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band11_srf_mean             (time, scanline, ground_pixel) float32 ...
+    band11_srf_coverage         (time, scanline, ground_pixel) float32 ...
+    band11_fov_mean             (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band11_fov_stdev            (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    band11_fov_nvalid           (time, scanline, ground_pixel, scaled_field_of_view) float32 ...
+    latitude_bounds             (time, scanline, ground_pixel, ncorner) float32 ...
+    longitude_bounds            (time, scanline, ground_pixel, ncorner) float32 ...
+    viewing_zenith_angle        (time, scanline, ground_pixel) float32 ...
+</code></pre>
+<p>The S-NPP product contains the VIIRS cloud mask classification information, regridded on the Sentinel-5P grid. For each of the cloud mask variables (confidently cloudy, probably cloudy, probably clear, confidently clear), a dedicated variable contains the number of VIIRS pixels classified as such, enclosed into the related TROPOMI pixel, for a defined scaled field of view. </p>
+<p>We won’t go too much into details on how to process this information. As a pure programming exercise, we are going to sum the cloud mask classification values for each scaled field of view into a single variable. We will then extract, for each TROPOMI pixel, the max value among the four cloud mask values, so that to classify each TROPOMI pixel as confidently clear, probably clear, probably cloudy, or confidently cloudy. It is a very merciless classification, but it will do the job for this exercise.</p>
+<p>To do that, we are going to define a new variable, <code>cloud_confidence</code>, which, for each TROPOMI pixel, contains a numerical value from 0 to 3 corresponding to the cloud mask classification information. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">vcm_measurements = [<span class="string">&#x27;vcm_confidently_cloudy&#x27;</span>, </span><br><span class="line">                    <span class="string">&#x27;vcm_probably_cloudy&#x27;</span>, </span><br><span class="line">                    <span class="string">&#x27;vcm_probably_clear&#x27;</span>, </span><br><span class="line">                    <span class="string">&#x27;vcm_confidently_clear&#x27;</span>]</span><br><span class="line">  </span><br><span class="line"><span class="comment"># sum cloud mask information values for all scaled field of views</span></span><br><span class="line"><span class="keyword">for</span> vcm_measurement <span class="keyword">in</span> vcm_measurements:</span><br><span class="line">    snpp[vcm_measurement+<span class="string">&#x27;_sum&#x27;</span>] =\</span><br><span class="line">        snpp[vcm_measurement].<span class="built_in">sum</span>(dim=<span class="string">&#x27;scaled_field_of_view&#x27;</span>)</span><br><span class="line"></span><br><span class="line">cloud_confidence = np.array([snpp[<span class="string">&#x27;vcm_confidently_cloudy_sum&#x27;</span>].values.flatten(),</span><br><span class="line">                             snpp[<span class="string">&#x27;vcm_probably_cloudy_sum&#x27;</span>].values.flatten(),</span><br><span class="line">                             snpp[<span class="string">&#x27;vcm_probably_clear_sum&#x27;</span>].values.flatten(),</span><br><span class="line">                             snpp[<span class="string">&#x27;vcm_confidently_clear_sum&#x27;</span>].values.flatten()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># for each pixel, assign cloud confidence value depending on the max pixel count </span></span><br><span class="line"><span class="comment"># of the four cloud mask classification variables</span></span><br><span class="line">snpp[<span class="string">&#x27;cloud_confidence&#x27;</span>] = xr.DataArray(</span><br><span class="line">    np.argmax(cloud_confidence, axis=<span class="number">0</span>).reshape(snpp.vcm_confidently_cloudy_sum.shape), </span><br><span class="line">    dims=[<span class="string">&#x27;time&#x27;</span>, <span class="string">&#x27;scanline&#x27;</span>, <span class="string">&#x27;ground_pixel&#x27;</span>])</span><br><span class="line"></span><br><span class="line">unique, counts = np.unique(np.argmax(cloud_confidence, axis=<span class="number">0</span>), </span><br><span class="line">                           return_counts=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">plt.bar(unique, counts)</span><br><span class="line">plt.xticks(unique+<span class="number">0.05</span>/<span class="number">2</span>, [<span class="string">&#x27;Confidently\nCloudy&#x27;</span>, <span class="string">&#x27;Probably\nCloudy&#x27;</span>, </span><br><span class="line">                            <span class="string">&#x27;Probably\nClear&#x27;</span>, <span class="string">&#x27;Confidently\nClear&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&quot;Cloud confidence level count over &#123;&#125; pixels&quot;</span>.<span class="built_in">format</span>(counts.<span class="built_in">sum</span>()))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_18_0.png" class="">
+
+
+<p>As we can see from the plot above, our TROPOMI pixels in this product have been classified as either confidently cloudy or confidently clear, with a very little percentage of probably clear pixels and an even smaller percentage of probably cloudy pixels.</p>
+<h2 id="Plotting-the-data"><a href="#Plotting-the-data" class="headerlink" title="Plotting the data"></a>Plotting the data</h2><p>What follows is a quite elaborate plot definition. It took me a while to get it the way I wanted it to look.<br>My biggest struggle was to get the two colour bars to be placed one at the bottom of the plot, and one on the right side. I finally managed it by creating a dedicated axes for the cloud mask colour bar and by passing the <code>cbar_kwargs</code> arguments to the xarray’s plot function, which in turns calls the underlying matplotlib function.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">figure, ax = plt.subplots(figsize=(<span class="number">15</span>, <span class="number">10</span>))</span><br><span class="line">ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=<span class="number">0.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># define plot extent</span></span><br><span class="line">plot_extent = (-<span class="number">140</span>, -<span class="number">60</span>, -<span class="number">15</span>, <span class="number">65</span>)</span><br><span class="line"></span><br><span class="line">ax.set_extent(plot_extent, ccrs.PlateCarree())</span><br><span class="line"></span><br><span class="line"><span class="comment"># define Natural Earth features</span></span><br><span class="line">states_provinces = cfeature.NaturalEarthFeature(</span><br><span class="line">    category=<span class="string">&#x27;cultural&#x27;</span>,</span><br><span class="line">    name=<span class="string">&#x27;admin_0_countries&#x27;</span>,</span><br><span class="line">    scale=<span class="string">&#x27;50m&#x27;</span>,</span><br><span class="line">    facecolor=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line"></span><br><span class="line">land_10m = cfeature.NaturalEarthFeature(</span><br><span class="line">    category=<span class="string">&#x27;physical&#x27;</span>, </span><br><span class="line">    name=<span class="string">&#x27;land&#x27;</span>, </span><br><span class="line">    scale=<span class="string">&#x27;50m&#x27;</span>,</span><br><span class="line">    edgecolor=<span class="string">&#x27;face&#x27;</span>,</span><br><span class="line">    facecolor=cfeature.COLORS[<span class="string">&#x27;land&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># set map background and features</span></span><br><span class="line">ax.add_feature(states_provinces, edgecolor=<span class="string">&#x27;lightgray&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create axes for the cloud plot    </span></span><br><span class="line">cloud_cbax = figure.add_axes([<span class="number">0.242</span>, <span class="number">0.015</span>, <span class="number">0.5</span>, <span class="number">0.03</span>]) </span><br><span class="line"></span><br><span class="line"><span class="comment"># Cloud mask plot</span></span><br><span class="line">cloud_plot = snpp[<span class="string">&#x27;cloud_confidence&#x27;</span>].isel(time=<span class="number">0</span>).plot.contourf(ax=ax, </span><br><span class="line">                                            transform=ccrs.PlateCarree(),</span><br><span class="line">                                            cmap=plt.cm.get_cmap(<span class="string">&#x27;Blues&#x27;</span>),</span><br><span class="line">                                            cbar_kwargs=&#123;<span class="string">&#x27;cax&#x27;</span>: cloud_cbax, \</span><br><span class="line">                                                         <span class="string">&#x27;orientation&#x27;</span>: <span class="string">&#x27;horizontal&#x27;</span>&#125;,</span><br><span class="line">                                            x=<span class="string">&#x27;longitude&#x27;</span>, </span><br><span class="line">                                            y=<span class="string">&#x27;latitude&#x27;</span>,</span><br><span class="line">                                            levels = [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># cloud mask colorbar properties</span></span><br><span class="line">cloud_cbar = cloud_plot.colorbar</span><br><span class="line">cloud_cbar.ax.get_xaxis().set_ticks([<span class="number">0</span>, <span class="number">0.125</span>, <span class="number">0.375</span>, <span class="number">0.625</span>, <span class="number">0.875</span>])</span><br><span class="line">cloud_cbar.ax.tick_params(axis=<span class="string">u&#x27;both&#x27;</span>, which=<span class="string">u&#x27;both&#x27;</span>,length=<span class="number">0</span>)</span><br><span class="line">cloud_cbar.ax.set_xticklabels([<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;Confidently\ncloudy&#x27;</span>, <span class="string">&#x27;Probably\ncloudy&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Probably\nclear&#x27;</span>, <span class="string">&#x27;Confidently\nclear&#x27;</span>], size=<span class="number">14</span>)</span><br><span class="line">cloud_cbar.ax.set_xlabel(<span class="string">&#x27;Cloud confidence level&#x27;</span>, labelpad=-<span class="number">75</span>, size = <span class="number">14</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># CH4 plot</span></span><br><span class="line">ch4_plot = ch4[<span class="string">&#x27;methane_mixing_ratio&#x27;</span>].isel(time=<span class="number">0</span>).plot.pcolormesh(ax=ax, </span><br><span class="line">                                            transform=ccrs.PlateCarree(),</span><br><span class="line">                                            x=<span class="string">&#x27;longitude&#x27;</span>, </span><br><span class="line">                                            y=<span class="string">&#x27;latitude&#x27;</span>,</span><br><span class="line">                                            cmap=plt.get_cmap(<span class="string">&#x27;Spectral_r&#x27;</span>),</span><br><span class="line">                                            vmin=ch4[<span class="string">&#x27;methane_mixing_ratio&#x27;</span>].quantile(<span class="number">0.05</span>),</span><br><span class="line">                                            vmax=ch4[<span class="string">&#x27;methane_mixing_ratio&#x27;</span>].quantile(<span class="number">0.95</span>), zorder=<span class="number">3</span>)                                            </span><br><span class="line"></span><br><span class="line"><span class="comment"># CH4 colorbar properties</span></span><br><span class="line">ch4_cbar = ch4_plot.colorbar</span><br><span class="line">ch4_cbar.ax.set_ylabel(<span class="string">&#x27;Methane mixing ratio [ppb]&#x27;</span>, labelpad=-<span class="number">85</span>, size=<span class="number">14</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gridlines definition</span></span><br><span class="line">gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=<span class="literal">True</span>,</span><br><span class="line">                  linewidth=<span class="number">1</span>, color=<span class="string">&#x27;gray&#x27;</span>, alpha=<span class="number">0.5</span>, linestyle=<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">gl.xlabels_top = <span class="literal">False</span></span><br><span class="line">gl.ylabels_right = <span class="literal">False</span></span><br><span class="line">gl.xformatter = LONGITUDE_FORMATTER</span><br><span class="line">gl.yformatter = LATITUDE_FORMATTER</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot title/subtitle/caption</span></span><br><span class="line">plt.title(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">ax.text(<span class="number">0</span>, <span class="number">1.05</span>, <span class="string">r&quot;CH$_4$ Mixing Ratio / S-NPP Cloud mask&quot;</span>, fontsize=<span class="number">20</span>, transform=ax.transAxes)</span><br><span class="line">ax.text(<span class="number">0</span>, <span class="number">1.015</span>, <span class="string">r&quot;Date: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(ch4.time.data[<span class="number">0</span>]).split(<span class="string">&#x27;T&#x27;</span>)[<span class="number">0</span>]), fontsize=<span class="number">14</span>, transform=ax.transAxes)</span><br><span class="line">ax.text(<span class="number">0.5</span>, -<span class="number">0.28</span>, <span class="string">r&quot;Data: ESA Sentinel-5P/TROPOMI,&quot;</span></span><br><span class="line">        <span class="string">&quot; Map: Cartopy&quot;</span>, fontsize=<span class="number">14</span>, color=<span class="string">&#x27;gray&#x27;</span>, transform=ax.transAxes)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/output_22_0.png" class="">
+
+
+<p>From a quick visual check, we can indeed observe that the CH4 measurements have been acquired on land and cloud free areas only.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In this post, we showed how to use xarray to easily open and manipulate NetCDF4 files, and how to superimpose two  products on a single a publication ready plot with Matplotlib and cartopy.</p>
+<p>I hope you enjoyed it, and feel free to comment if you have questions or remarks.</p>
+<p><em>This post was written entirely in a Jupyter notebook. You can download it on my <a target="_blank" rel="noopener" href="https://github.com/stefanomattia/jupyter-notebooks/tree/master/earth-observation">GitHub repository</a>.</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/xarray/" rel="tag"># xarray</a>
+              <a href="/tags/cartopy/" rel="tag"># cartopy</a>
+              <a href="/tags/sentinel-5p/" rel="tag"># sentinel-5p</a>
+              <a href="/tags/matplotlib/" rel="tag"># matplotlib</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/" rel="prev" title="Mount Sinabung eruption as seen by Sentinel-5P">
+                  <i class="fa fa-chevron-left"></i> Mount Sinabung eruption as seen by Sentinel-5P
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stefano Mattia</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

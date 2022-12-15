@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sentinel-5P pitch rotation manoeuvres detection">
+<meta property="og:url" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/index.html">
+<meta property="og:site_name" content="Space to Ground">
+<meta property="og:description" content="In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.   In this post we are g">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_15_0.png">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_19_0.png">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_41_0.png">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_43_0.png">
+<meta property="og:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
+<meta property="article:published_time" content="2017-11-28T21:22:39.000Z">
+<meta property="article:modified_time" content="2018-03-02T10:07:34.000Z">
+<meta property="article:author" content="Stefano Mattia">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="sentinel-5p">
+<meta property="article:tag" content="scipy">
+<meta property="article:tag" content="step-detection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png">
+
+
+<link rel="canonical" href="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/","path":"2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/","title":"Sentinel-5P pitch rotation manoeuvres detection"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Sentinel-5P pitch rotation manoeuvres detection | Space to Ground</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Space to Ground</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Notes from an earth observation engineer's life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Loading-the-data"><span class="nav-number">1.</span> <span class="nav-text">Loading the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plotting-the-data"><span class="nav-number">2.</span> <span class="nav-text">Plotting the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filtering-and-processing-the-data"><span class="nav-number">3.</span> <span class="nav-text">Filtering and processing the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Putting-all-the-pieces-together"><span class="nav-number">4.</span> <span class="nav-text">Putting all the pieces together</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stefano Mattia</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stefanomattia" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stefanomattia" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stefano Mattia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Sentinel-5P pitch rotation manoeuvres detection | Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Sentinel-5P pitch rotation manoeuvres detection
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-28 22:22:39" itemprop="dateCreated datePublished" datetime="2017-11-28T22:22:39+01:00">2017-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2018-03-02 11:07:34" itemprop="dateModified" datetime="2018-03-02T11:07:34+01:00">2018-03-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Earth-Observation/" itemprop="url" rel="index"><span itemprop="name">Earth Observation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png" class="">
+
+<p>In the early phase of the Sentinel-5P commissioning, a number of pitch rotation manoeuvres were put in place, in order to perform specific in-flight calibration measurements.  </p>
+<p>In this post we are going to try to outline a generalised way in Python to identify the pitch rotations occurring during the set of planned spacecraft manoeuvres. This will allow us to derive manoeuvres execution times and their duration.  </p>
+<p>The process under analysis can be considered a special case of a much broader statistical and numerical processing class of problems, called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Step_detection">step detection</a>, that is the process of finding abrupt changes (steps, jumps, shifts) in the mean level of a time series or signal.</p>
+<span id="more"></span>
+
+<h2 id="Loading-the-data"><a href="#Loading-the-data" class="headerlink" title="Loading the data"></a>Loading the data</h2><p>Let’s start by importing our libraries and loading the data from our input product.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> netCDF4 <span class="keyword">as</span> nc</span><br><span class="line"><span class="keyword">import</span> dateutil.parser</span><br><span class="line"><span class="keyword">from</span> scipy.signal <span class="keyword">import</span> savgol_filter</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+<p>Our data are contained in a Sentinel-5P L1B product, containing both measurements and geolocation&#x2F;instrument positioning data in a NetCDF4 file.<br>Let’s open it and extract the variable we are interested in: </p>
+<ul>
+<li><code>solar_elevation_angle</code>, that is the elevation angle of the sun measured from the instrument, as a function of the scanline.</li>
+<li><code>time_reference</code> and <code>delta_time</code>, defining the measurement time for each scanline.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">input_dir = <span class="string">&#x27;/Users/stefano/src/s5p/products&#x27;</span></span><br><span class="line">input_product = <span class="string">&#x27;S5P_OFFL_L1B_CA_UVN_20171119T055356_20171119T073526_00523_01_001200_20171119T123144.nc&#x27;</span></span><br><span class="line">l1b = nc.Dataset(join(input_dir, input_product))</span><br><span class="line"></span><br><span class="line">measurements = l1b.groups[<span class="string">&#x27;BAND6_IRRADIANCE&#x27;</span>].groups[<span class="string">&#x27;SOLAR_IRRADIANCE_SPECIAL_MODE_0266&#x27;</span>]</span><br><span class="line">observations = measurements.groups[<span class="string">&#x27;OBSERVATIONS&#x27;</span>]</span><br><span class="line">geodata = measurements.groups[<span class="string">&#x27;GEODATA&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>The <code>solar_elevation_angle</code> is an array of floats, which identifies the evolution of the elevation angle of the sun, as seen from the instrument, over the scanlines acquired during the orbit.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">solar_elevation_angle = geodata.variables[<span class="string">&#x27;solar_elevation_angle&#x27;</span>][<span class="number">0</span>,:]</span><br><span class="line"><span class="built_in">print</span>(solar_elevation_angle)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ -3.84181786  -3.82768917  -3.81356263 ...,  34.54127884  34.55457306
+  34.56786728]
+</code></pre>
+<p>To determine the measurement time for each scanline, we need to retrieve the reference time, stored as a global attribute in our input file. Then, by using the <code>delta_time</code> variable in the <code>OBSERVATIONS</code> group, indicating the time difference with respect to the reference time, we will derive the measurement time for each scanline.  </p>
+<p>We are going to make use of the <code>dateutil</code> module to parse the <code>time_reference</code> attribute, which is an UTC time specified as an ISO 8601 date.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time_reference = dateutil.parser.parse(l1b.time_reference)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Reference time: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(time_reference))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Reference time: 2017-11-19 00:00:00+00:00
+</code></pre>
+<p>The scanline relative timestamps can be derived by adding the <code>delta_time</code> values, expressed as milliseconds from the reference time, to the <code>time_reference</code> value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">relatime_timestamps =\</span><br><span class="line">    np.array([time_reference+\</span><br><span class="line">              timedelta(milliseconds=<span class="built_in">int</span>(observations.variables[<span class="string">&#x27;delta_time&#x27;</span>][<span class="number">0</span>, scanline])) </span><br><span class="line">              <span class="keyword">for</span> scanline <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(solar_elevation_angle))])</span><br></pre></td></tr></table></figure>
+
+<h2 id="Plotting-the-data"><a href="#Plotting-the-data" class="headerlink" title="Plotting the data"></a>Plotting the data</h2><p>Let’s have a preliminary look at our solar elevation angle evolution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Scanline&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Solar elevation angle [deg]&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_15_0.png" class="">
+
+
+<p>The four points where the slope changes identify the spacecraft pitch rotations. As we can see, the solar elevation angle evolution outside the spacecraft manoeuvres regions is pretty much linear as a function of time, and that should always be the case for this particular spacecraft (except for major failures).  </p>
+<p>We would like to derive a set of “representative” scanline indexes where the manoeuvres have taken place. Note that during each spacecraft manoeuvre, the slope change is obviously continuous, although discretised in our set of angle values. Therefore, it does not really make sense to try to pick out a single scanline where a manoeuvre has taken place. Our goal is rather to identify, for each manoeuvre, a “representative” scanline in the range of scanlines defining the interval of time where the manoeuvre occurred (e.g. some sort of middle value).</p>
+<h2 id="Filtering-and-processing-the-data"><a href="#Filtering-and-processing-the-data" class="headerlink" title="Filtering and processing the data"></a>Filtering and processing the data</h2><p>My first approach in trying to identify the changes in the curve’s slope was to compute the second derivative of the signal, clipping the high-frequency quantisation noise, smoothing the resulting curve with a gaussian filter, and picking the scanlines corresponding to the local maxima in the smoothed signal.<br>However, I was not satisfied with this approach, as I had to manually tune the clipping threshold values and the gaussian filter’s sigma parameter, to get the scanline indexes I was looking for. As you can imagine, this solution would not easily generalise to other cases.</p>
+<p>A much more resilient approach was proposed by <a target="_blank" rel="noopener" href="https://stackoverflow.com/users/6655984/6-white-male">6’ white male</a> on this brilliant answer to my <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/47519626/using-numpy-scipy-to-identify-slope-changes-in-digital-signals">original question on stackoverflow</a>, which entails using SciPy’s implementation of the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter">Savitzky–Golay filter</a> to smooth out the second derivative of our signal and to consider the regions where the second derivative is “large” enough.</p>
+<p>Let’s have a look at the filtered signal:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window = <span class="number">101</span></span><br><span class="line">filtered_signal = savgol_filter(solar_elevation_angle, window_length=<span class="number">101</span>, </span><br><span class="line">                                polyorder=<span class="number">2</span>, deriv=<span class="number">2</span>)</span><br><span class="line">plt.plot(filtered_signal)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Scanline&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Solar elevation angle - Smoothed 2nd derivative&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_19_0.png" class="">
+
+
+<p>We want to identify the peaks’ indexes. To filter out any residual high-frequency quantisation noise, we are going to consider our peaks as the regions where the signal is greater than half of the absolute maximum value:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peaks = np.where(np.<span class="built_in">abs</span>(filtered_signal) &gt; np.<span class="built_in">max</span>(np.<span class="built_in">abs</span>(filtered_signal))/<span class="number">2</span>)[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(peaks)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ 659  660  661  662  663  664  665  666  667  668  669  670  671  672  673
+  674  675  676  677  678  679  680  681  682  683  684  685  686  687  688
+  689  690  691  692  693  694  695  696  697  698  699  700  701  702  703
+  704  705  706  707  708  709  710  711  712  713  714  715  716  717  718
+  719  989  990  991  992  993  994  995  996  997  998  999 1000 1001 1002
+ 1003 1004 1005 1006 1007 1008 1009 1010 1011 1012 1013 1014 1015 1016 1017
+ 1018 1019 1020 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030 1031 1032
+ 1033 1034 1035 1036 1037 1038 1039 1040 1041 1042 1043 1044 1045 1046 1047
+ 1048 2326 2327 2328 2329 2330 2331 2332 2333 2334 2335 2336 2337 2338 2339
+ 2340 2341 2342 2343 2344 2345 2346 2347 2348 2349 2350 2351 2352 2353 2354
+ 2355 2356 2357 2358 2359 2360 2361 2362 2363 2364 2365 2366 2367 2368 2369
+ 2370 2371 2372 2373 2374 2375 2376 2377 2378 2379 2380 2381 2382 2383 2384
+ 2385 2386 2656 2657 2658 2659 2660 2661 2662 2663 2664 2665 2666 2667 2668
+ 2669 2670 2671 2672 2673 2674 2675 2676 2677 2678 2679 2680 2681 2682 2683
+ 2684 2685 2686 2687 2688 2689 2690 2691 2692 2693 2694 2695 2696 2697 2698
+ 2699 2700 2701 2702 2703 2704 2705 2706 2707 2708 2709 2710 2711 2712 2713
+ 2714]
+</code></pre>
+<p>We got back a lot of indexes, correctly defining the four different peaks (or half-peaks, to be precise). How to set the peaks apart? We could look at the gaps between them. We define gap as a separation between two adjacent peaks larger than our defined window. For example, in the array above, we can spot a clear gap between 719 and 989, at the beginning of the fifth row.</p>
+<p>How to find the gaps in the <code>peaks</code> array? The common approach in Python is to use NumPy’s <code>np.diff</code> function to calculate the discreet difference between the array’s values. The output of the <code>np.diff</code> function is a new array whose elements are calculated taking the difference between the n+1<sub>th</sub> and the n<sub>th</sub> element of the input array. The length of the returned array is obviously one less of the input array’s length. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.diff(peaks)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,  270,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1, 1278,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,  270,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+          1,    1,    1,    1,    1,    1,    1,    1,    1])
+</code></pre>
+<p>We can immediately notice a gap of 270 scanline between the first and the second peak, a gap of 1278 scanlines between the second and the third peak, and another gap of 270 scanlines between the third and the fourth peak.  </p>
+<p>Our filter did an extremely good job in identifying the correct peaks, but we still want to make sure to pick the correct ones, that is: all gaps separated by a number of scanlines larger than our defined window. For this purpose we are going to define a boolean index array, which will come in handy to retrieve the begin&#x2F;end indexes of each peak: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gaps = np.diff(peaks) &gt; window</span><br></pre></td></tr></table></figure>
+
+<p>We can’t directly filter our <code>peaks</code> array with the <code>gaps</code> index array, as the length of the two arrays would not match: remember, <code>np.diff</code> returns an array whose size is one less of the input array. But we could slice our <code>peaks</code> array in such a way that filtering it with the <code>gaps</code> array would return both the beginnings and the ends of each peak.</p>
+<p>How does this work?</p>
+<p>As an example, let’s consider the first identified gap of 270 scanlines in our <code>np.diff</code> generated array, and use it to index our <code>peaks</code> array.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peaks[np.argwhere(np.diff(peaks) == <span class="number">270</span>)[<span class="number">0</span>][<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>719
+</code></pre>
+<p>That’s the end of the first gap in our <code>peak</code> array. If we “shift” the <code>peak</code> array to the left, by taking out the first element, we could then identify the beginning of the next gap: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peaks[<span class="number">1</span>:][np.argwhere(np.diff(peaks) == <span class="number">270</span>)[<span class="number">0</span>][<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>989
+</code></pre>
+<p>Does it start to be clear how we could single out the beginnings and ends of each peak?<br>Let’s then define our peaks’ begins and ends as follows:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begins = peaks[<span class="number">1</span>:][gaps]</span><br><span class="line">ends = peaks[:-<span class="number">1</span>][gaps]</span><br><span class="line"><span class="built_in">print</span>(begins)</span><br><span class="line"><span class="built_in">print</span>(ends)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ 989 2326 2656]
+[ 719 1048 2386]
+</code></pre>
+<p>Almost there! We need to add the beginning of the first peak to the <code>begins</code> array, and the end of the last peak to the <code>ends</code> array, which got “lost” during the slicing.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begins = np.insert(begins, <span class="number">0</span>, peaks[<span class="number">0</span>])</span><br><span class="line">ends = np.append(ends, peaks[-<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(begins)</span><br><span class="line"><span class="built_in">print</span>(ends)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ 659  989 2326 2656]
+[ 719 1048 2386 2714]
+</code></pre>
+<p>Excellent! We have now got the beginning and ends of each of our peaks, or half-peaks to be precise.<br>We can then easily derive the middle value as follows:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slope_changes_idx = ((begins + ends)/<span class="number">2</span>).astype(np.<span class="built_in">int</span>)</span><br><span class="line"><span class="built_in">print</span>(slope_changes_idx)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ 689 1018 2356 2685]
+</code></pre>
+<p>Hopefully, those were the scanlines we were looking for.</p>
+<h2 id="Putting-all-the-pieces-together"><a href="#Putting-all-the-pieces-together" class="headerlink" title="Putting all the pieces together"></a>Putting all the pieces together</h2><p>Having shown step by step the process of change detection in our set of data, we could now build a function that, given an set of data, returns an array of indexes where the changes most likely occurred:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detect_changes</span>(<span class="params">input_signal, window</span>):</span><br><span class="line">    filtered_signal = np.<span class="built_in">abs</span>(savgol_filter(input_signal, </span><br><span class="line">                                           window_length=window, </span><br><span class="line">                                           polyorder=<span class="number">2</span>, </span><br><span class="line">                                           deriv=<span class="number">2</span>))</span><br><span class="line">    peaks = np.where(filtered_signal &gt; np.<span class="built_in">max</span>(filtered_signal/<span class="number">2</span>))[<span class="number">0</span>]</span><br><span class="line">    gaps = np.diff(peaks) &gt; window</span><br><span class="line">    begins = np.insert(peaks[<span class="number">1</span>:][gaps], <span class="number">0</span>, peaks[<span class="number">0</span>])</span><br><span class="line">    ends = np.append(peaks[:-<span class="number">1</span>][gaps], peaks[-<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> ((begins+ends)/<span class="number">2</span>).astype(np.<span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
+
+<p>How does the <code>window</code> parameter impact the detection of changes in our input signal? We would like to keep it big enough to detect the real slope changes, but small enough to avoid smoothing out actual changes in our input signal.<br>It turns out that the algorithm is quite robust with respect to the choice of the <code>window</code> parameter, at least for this particular input signal: no matter what value we choose from 11 to 211, we get pretty consistent results:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> window <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">11</span>,<span class="number">211</span>,<span class="number">2</span>):</span><br><span class="line">    slope_changes_idx = detect_changes(solar_elevation_angle, window)</span><br><span class="line">    plt.scatter(slope_changes_idx, slope_changes_idx)</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_41_0.png" class="">
+
+
+<p>Let’s see how the identified scanlines fit in our plot:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">slope_changes_idx = detect_changes(solar_elevation_angle, window)</span><br><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.plot(slope_changes_idx, solar_elevation_angle[slope_changes_idx], <span class="string">&#x27;ro&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Scanline&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Solar elevation angle [deg]&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_43_0.png" class="">
+
+
+<p>Perfect!</p>
+<p>Finding out at what time each pitch manoeuvre occurred is easy as pie. Remember we defined our <code>relative_timestamps</code> array containing the measurement time for each scaline? We can now use the <code>changes</code> array to index the <code>relative_timestamps</code> and retrieve the measurement time for our four scanlines:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">relatime_timestamps[slope_changes_idx]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([datetime.datetime(2017, 11, 19, 7, 11, 56, 512000, tzinfo=tzutc()),
+       datetime.datetime(2017, 11, 19, 7, 13, 25, 340000, tzinfo=tzutc()),
+       datetime.datetime(2017, 11, 19, 7, 19, 26, 592000, tzinfo=tzutc()),
+       datetime.datetime(2017, 11, 19, 7, 20, 55, 420000, tzinfo=tzutc())], dtype=object)
+</code></pre>
+<p>What happens if we apply our good old friend <code>np.diff</code> to that <code>relative_timestamps</code> slice?<br>That’s right! We’ll get the elapsed time between each of the changes:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Manouevres durations: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">    <span class="string">&quot;, &quot;</span>.join([<span class="built_in">str</span>(t) <span class="keyword">for</span> t <span class="keyword">in</span> np.diff(relatime_timestamps[slope_changes_idx])])))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Manouevres durations: 0:01:28.828000, 0:06:01.252000, 0:01:28.828000
+</code></pre>
+<p>That’s some serious NumPy magic going on here!</p>
+<p>What about decorating our plot with some fancy labels?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(solar_elevation_angle)</span><br><span class="line">plt.plot(slope_changes_idx, solar_elevation_angle[slope_changes_idx], <span class="string">&#x27;ro&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># define relative offset for each label</span></span><br><span class="line">label_offset = np.array([[<span class="number">15</span>, <span class="number">25</span>], [<span class="number">35</span>, <span class="number">35</span>], [<span class="number">0</span>, <span class="number">25</span>], [-<span class="number">25</span>, -<span class="number">10</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, sl <span class="keyword">in</span> <span class="built_in">enumerate</span>(slope_changes_idx):</span><br><span class="line">    plt.annotate(<span class="string">&quot;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(relatime_timestamps[sl].strftime(<span class="string">&quot;%H:%M:%S&quot;</span>)),</span><br><span class="line">                 xy=(slope_changes_idx[i], solar_elevation_angle[slope_changes_idx[i]]), </span><br><span class="line">                 xycoords=<span class="string">&#x27;data&#x27;</span>,</span><br><span class="line">                 xytext=label_offset[i], textcoords=<span class="string">&#x27;offset points&#x27;</span>,</span><br><span class="line">                 bbox=<span class="built_in">dict</span>(boxstyle=<span class="string">&#x27;round, pad=0.3&#x27;</span>, fc=<span class="string">&#x27;orange&#x27;</span>, alpha=<span class="number">0.1</span>),</span><br><span class="line">                 arrowprops=<span class="built_in">dict</span>(arrowstyle=<span class="string">&quot;-|&gt;&quot;</span>, connectionstyle=<span class="string">&quot;arc3, rad=0.1&quot;</span>),</span><br><span class="line">                 horizontalalignment=<span class="string">&#x27;right&#x27;</span>, verticalalignment=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Scanline&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Solar elevation angle [deg]&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/output_51_0.png" class="">
+
+
+<p>Looks great!</p>
+<p>That’s it for now.<br>To summarise: we used a Savitzky–Golay smoothing filter on the second derivative of our variable of interest to identify changes in the slope of the curve. The proposed solution should be robust enough to generalise to similar problems.<br>It’s been a great learning exercise to dip my toes in the step-detection class of problems.</p>
+<p>The Jupyter notebook for this post is available on my <a target="_blank" rel="noopener" href="https://github.com/stefanomattia/jupyter-notebooks/tree/master/earth-observation">GitHub repository</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/sentinel-5p/" rel="tag"># sentinel-5p</a>
+              <a href="/tags/scipy/" rel="tag"># scipy</a>
+              <a href="/tags/step-detection/" rel="tag"># step-detection</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/12/05/Sentinel-5P-irradiance-measurement-animation/" rel="next" title="Sentinel-5P irradiance measurement animation">
+                  Sentinel-5P irradiance measurement animation <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stefano Mattia</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2017/11/28/Sentinel-5P-pitch-rotation-manoeuvres-detection/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

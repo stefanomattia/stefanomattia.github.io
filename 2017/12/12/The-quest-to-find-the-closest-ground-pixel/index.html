@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Lat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The quest to find the closest ground pixel">
+<meta property="og:url" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/index.html">
+<meta property="og:site_name" content="Space to Ground">
+<meta property="og:description" content="The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are scanline (along track dimension) and ground pixel (across track dimension). Lat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
+<meta property="og:image" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_8_0.png">
+<meta property="og:image" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_29_0.png">
+<meta property="og:image" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
+<meta property="article:published_time" content="2017-12-12T14:09:42.000Z">
+<meta property="article:modified_time" content="2022-12-15T14:41:01.926Z">
+<meta property="article:author" content="Stefano Mattia">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="xarray">
+<meta property="article:tag" content="scipy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png">
+
+
+<link rel="canonical" href="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/","path":"2017/12/12/The-quest-to-find-the-closest-ground-pixel/","title":"The quest to find the closest ground pixel"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>The quest to find the closest ground pixel | Space to Ground</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Space to Ground</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Notes from an earth observation engineer's life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Defining-our-dataset"><span class="nav-number">1.</span> <span class="nav-text">Defining our dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#On-the-distance-between-two-points-on-planet-Earth"><span class="nav-number">2.</span> <span class="nav-text">On the distance between two points on planet Earth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-the-closest"><span class="nav-number">3.</span> <span class="nav-text">Finding the closest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wrapping-up"><span class="nav-number">4.</span> <span class="nav-text">Wrapping up</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stefano Mattia</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stefanomattia" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stefanomattia" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stefano Mattia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="The quest to find the closest ground pixel | Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The quest to find the closest ground pixel
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-12 15:09:42" itemprop="dateCreated datePublished" datetime="2017-12-12T15:09:42+01:00">2017-12-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-12-15 15:41:01" itemprop="dateModified" datetime="2022-12-15T15:41:01+01:00">2022-12-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Earth-Observation/" itemprop="url" rel="index"><span itemprop="name">Earth Observation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png" class="">
+
+<p>The Sentinel-5P data I work on lately is typically organised on an irregular two-dimensional grid whose dimensions are <em>scanline</em> (along track dimension) and <em>ground pixel</em> (across track dimension). Latitude and longitude information for each ground pixel are stored in auxiliary coordinate variables.  </p>
+<p>I have recently stumbled upon the problem of locating the closest ground pixel to a reference point, identified by its geodetic coordinates.</p>
+<p>In this post, we are going to define an algorithm to solve this problem by using coordinate transformations, $k$-dimensional trees, and xarray pointwise indexing.</p>
+<span id="more"></span>
+
+<h2 id="Defining-our-dataset"><a href="#Defining-our-dataset" class="headerlink" title="Defining our dataset"></a>Defining our dataset</h2><p>Let’s get our hands dirty and start writing some code. As usual, let’s import our libraries:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> xarray <span class="keyword">as</span> xr</span><br><span class="line"><span class="keyword">import</span> cartopy.crs <span class="keyword">as</span> ccrs</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> spatial</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+<p>To prototype our search algorithm, we are going to define a toy dataset, and store it into an xarray’s <code>DataArray</code>. In an outburst of creativity, we could simulate some surface temperature measurements over Europe and the Mediterranean basin, on a 12x10 grid.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">num_sl = <span class="number">12</span> <span class="comment"># number of scanlines</span></span><br><span class="line">num_gp = <span class="number">10</span> <span class="comment"># number of ground pixels</span></span><br><span class="line"></span><br><span class="line">lon, lat = np.meshgrid(np.linspace(-<span class="number">20</span>, <span class="number">20</span>, num_gp),</span><br><span class="line">                       np.linspace(<span class="number">30</span>, <span class="number">60</span>, num_sl))</span><br><span class="line">lon += lat/<span class="number">10</span></span><br><span class="line">lat += lon/<span class="number">10</span></span><br><span class="line"></span><br><span class="line">data = (np.linspace(<span class="number">30</span>, <span class="number">0</span>, num_sl*num_gp).reshape(num_sl, num_gp) + </span><br><span class="line">        <span class="number">6</span>*np.random.rand(num_sl, num_gp))</span><br><span class="line"></span><br><span class="line">temperatures = xr.DataArray(data, dims=[<span class="string">&#x27;scanline&#x27;</span>, <span class="string">&#x27;ground_pixel&#x27;</span>],</span><br><span class="line">                            coords = &#123;<span class="string">&#x27;lat&#x27;</span>: ((<span class="string">&#x27;scanline&#x27;</span>, <span class="string">&#x27;ground_pixel&#x27;</span>), lat),</span><br><span class="line">                                      <span class="string">&#x27;lon&#x27;</span>: ((<span class="string">&#x27;scanline&#x27;</span>, <span class="string">&#x27;ground_pixel&#x27;</span>), lon)&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Let’s have a quick look at our dataset:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ax = plt.subplot(projection=ccrs.PlateCarree())</span><br><span class="line">ax.coastlines()</span><br><span class="line">ax.gridlines(draw_labels=<span class="literal">True</span>)</span><br><span class="line">temperatures.plot.pcolormesh(<span class="string">&#x27;lon&#x27;</span>, <span class="string">&#x27;lat&#x27;</span>, ax=ax, infer_intervals=<span class="literal">True</span>);</span><br><span class="line">ax.scatter(lon, lat, transform=ccrs.PlateCarree(), s=<span class="number">5</span>)</span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_8_0.png" class="">
+
+
+<p>Now, that looks suprisingly credible, doesn’t it?</p>
+<p>The blue dots in the plot identify the centres of each pixel, whose boundaries are automatically inferred by xarray.</p>
+<p>What we want to achieve is to come up with a way to compare distances between a reference point, and all centre pixels, and pick the minimum value. But first, we need to dig a bit deeper on what it actually means to measure distances on the surface of our planet.</p>
+<h2 id="On-the-distance-between-two-points-on-planet-Earth"><a href="#On-the-distance-between-two-points-on-planet-Earth" class="headerlink" title="On the distance between two points on planet Earth"></a>On the distance between two points on planet Earth</h2><p>How do we compute the distance between two points, given their geodetic (latitude&#x2F;longitude&#x2F;altitude) coordinates?<br>Despite a recent resurgence of the old myth, our earth is definitely not flat. That means: put that Pythagorean theorem back in the drawer.</p>
+<p>The subject of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Geographical_distance">geographical distance</a> is considerably elaborated and we will not even try to cover it all in this post. It suffices to say that there are several ways to approximate the earth’s surface shape, and each of these approximations comes with a way to measure distances on it.</p>
+<p>In this post, we are going to use the cartesian or <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ECEF">ECEF</a> (“earth-centered, earth-fixed”) geographic coordinate system, which represents positions (in meters) as $X$, $Y$, and $Z$ coordinates, approximating the earth surface as an ellipsoid of revolution (close enough for our purposes). Once we convert our latitude&#x2F;longitude coordinates to cartesian coordinates, measuring the distance between two points is as simple as computing the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean distance</a> between them.</p>
+<p>The conversion between cartesian and geodetic coordinates latitude, longitude and ellipsoidal $(\phi, \lambda, h)$ is done according to:</p>
+<p>$$<br>\left[\begin{array}{c}X \\ Y \\ Z \end{array}\right] &#x3D; \left[\begin{array}{c} (r_n+h) \cos\phi \cos\lambda \\<br>(r_n + h) \cos\phi \sin\lambda \\<br>((1 - e^2) r_n + h) \sin\phi \end{array}\right]<br>$$</p>
+<p>Where $r_n&#x3D;\frac{a}{\sqrt{1-e^2\sin^2\phi}}$ is the local curvature of the ellipsoid along the first vertical, and where $e$, the first eccentricity, and $a$, the semi-major axis, are the parameters defining the ellipsoid.  </p>
+<p>Assuming that our dataset provides coordinates of the centre pixel on the earth’s surface ($h &#x3D; 0$), we can derive the following conversion formulas:</p>
+<p>$$<br>\left[\begin{array}{c}X \\ Y \\ Z \end{array}\right] &#x3D; \left[\begin{array}{c} r_n\cos\phi \cos\lambda \\<br>r_n \cos\phi \sin\lambda \\ (1 - e^2) r_n \sin\phi \end{array}\right]<br>$$</p>
+<p>Now that we learned a bit of <a target="_blank" rel="noopener" href="https://www.mathjax.org/">MathJax</a> and found a way to convert our pixels’ coordinates in cartesian coordinates, let’s start to think about an efficient way to compute the minimum distance between all pixels and a reference point.</p>
+<h2 id="Finding-the-closest"><a href="#Finding-the-closest" class="headerlink" title="Finding the closest"></a>Finding the closest</h2><p>Our problem falls into the class of nearest neighbour searches. A common approach when it comes to finding the nearest neighbour in a number of points with $k$ dimensions is to use a KD-tree, or $k$-dimensional tree. KD-trees allow to efficiently perform searches like “all points at distance lower than $r$ from $x$” or “$k$ nearest neighbors of $x$”.  </p>
+<p>Luckily, the SciPy library provides a very efficient <a target="_blank" rel="noopener" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.cKDTree.html">KD-tree implementation</a> so we will be spared from having to write our own. Once we have constructed our tree, all we have to do is to populate it with a $(n, m)$ shaped array of points and then query it the nearest neighbor to a reference point. In our case $n$ will be equal to the total number of ground pixels, and $m$ will be 3, as in our three dimensions $X$, $Y$, and $Z$.</p>
+<p>We will have to make use of some NumPy acrobatics to reshape our data structures from a two-dimensional grid to a one-dimensional array, and to convert the returned one-dimensional index to a set of two indices on our original grid. For sake of efficiency, we can wrap the geodetic coordinates conversion and the KD-tree initialization in a class. In this way, we won’t have to transform coordinates and reconstruct the tree each time we want to look up a new set of points.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">KDTreeIndex</span>():</span><br><span class="line">    </span><br><span class="line">    <span class="string">&quot;&quot;&quot; A KD-tree implementation for fast point lookup on a 2D grid</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Keyword arguments: </span></span><br><span class="line"><span class="string">    dataset -- a xarray DataArray containing lat/lon coordinates</span></span><br><span class="line"><span class="string">               (named &#x27;lat&#x27; and &#x27;lon&#x27; respectively)</span></span><br><span class="line"><span class="string">               </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">transform_coordinates</span>(<span class="params">self, coords</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; Transform coordinates from geodetic to cartesian</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Keyword arguments:</span></span><br><span class="line"><span class="string">        coords - a set of lan/lon coordinates (e.g. a tuple or </span></span><br><span class="line"><span class="string">                 an array of tuples)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># WGS 84 reference coordinate system parameters</span></span><br><span class="line">        A = <span class="number">6378.137</span> <span class="comment"># major axis [km]   </span></span><br><span class="line">        E2 = <span class="number">6.69437999014e-3</span> <span class="comment"># eccentricity squared    </span></span><br><span class="line">        </span><br><span class="line">        coords = np.asarray(coords).astype(np.<span class="built_in">float</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># is coords a tuple? Convert it to an one-element array of tuples</span></span><br><span class="line">        <span class="keyword">if</span> coords.ndim == <span class="number">1</span>:</span><br><span class="line">            coords = np.array([coords])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># convert to radiants</span></span><br><span class="line">        lat_rad = np.radians(coords[:,<span class="number">0</span>])</span><br><span class="line">        lon_rad = np.radians(coords[:,<span class="number">1</span>]) </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># convert to cartesian coordinates</span></span><br><span class="line">        r_n = A / (np.sqrt(<span class="number">1</span> - E2 * (np.sin(lat_rad) ** <span class="number">2</span>)))</span><br><span class="line">        x = r_n * np.cos(lat_rad) * np.cos(lon_rad)</span><br><span class="line">        y = r_n * np.cos(lat_rad) * np.sin(lon_rad)</span><br><span class="line">        z = r_n * (<span class="number">1</span> - E2) * np.sin(lat_rad)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> np.column_stack((x, y, z))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dataset</span>):</span><br><span class="line">        <span class="comment"># store original dataset shape</span></span><br><span class="line">        self.shape = dataset.shape</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># reshape and stack coordinates</span></span><br><span class="line">        coords = np.column_stack((dataset.lat.values.ravel(),</span><br><span class="line">                                  dataset.lon.values.ravel()))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># construct KD-tree</span></span><br><span class="line">        self.tree = spatial.cKDTree(self.transform_coordinates(coords))</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">query</span>(<span class="params">self, point</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; Query the kd-tree for nearest neighbour.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Keyword arguments:</span></span><br><span class="line"><span class="string">        point -- a (lat, lon) tuple or array of tuples</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        _, index = self.tree.query(self.transform_coordinates(point))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># regrid to 2D grid</span></span><br><span class="line">        index = np.unravel_index(index, self.shape)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># return DataArray indexers</span></span><br><span class="line">        <span class="keyword">return</span> xr.DataArray(index[<span class="number">0</span>], dims=<span class="string">&#x27;pixel&#x27;</span>), \</span><br><span class="line">               xr.DataArray(index[<span class="number">1</span>], dims=<span class="string">&#x27;pixel&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">query_ball_point</span>(<span class="params">self, point, radius</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; Query the kd-tree for all point within distance </span></span><br><span class="line"><span class="string">        radius of point(s) x</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Keyword arguments:</span></span><br><span class="line"><span class="string">        point -- a (lat, lon) tuple or array of tuples</span></span><br><span class="line"><span class="string">        radius -- the search radius (km)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">        index = self.tree.query_ball_point(self.transform_coordinates(point),</span><br><span class="line">                                           radius)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># regrid to 2D grid </span></span><br><span class="line">        index = np.unravel_index(index[<span class="number">0</span>], self.shape)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># return DataArray indexers</span></span><br><span class="line">        <span class="keyword">return</span> xr.DataArray(index[<span class="number">0</span>], dims=<span class="string">&#x27;pixel&#x27;</span>), \</span><br><span class="line">               xr.DataArray(index[<span class="number">1</span>], dims=<span class="string">&#x27;pixel&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The cool part about this <em>quick and dirty</em> implementation is that it does not really matter whether we query the tree by using one or multiple points, the logic in the <code>transform_coordinates</code> method is going to take care of that.  </p>
+<p>Let’s put our tree into action:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ground_pixel_tree = KDTreeIndex(temperatures)</span><br></pre></td></tr></table></figure>
+
+<p>We can now query the tree the nearest ground pixel to Rome, for example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rome = (<span class="number">41.9028</span>, <span class="number">12.4964</span>)</span><br><span class="line">rome_index = ground_pixel_tree.query(rome)</span><br><span class="line"><span class="built_in">print</span>(temperatures[rome_index])</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;xarray.DataArray (pixel: 1)&gt;
+array([ 23.641117])
+Coordinates:
+    lat      (pixel) float64 41.98
+    lon      (pixel) float64 10.76
+Dimensions without coordinates: pixel
+</code></pre>
+<p>Which tells us the coordinates of the centre of the closest ground pixel to rome, and the temperature around there. Nice and warm in Rome, as expected.</p>
+<p>The <code>query</code> method actually returns two xarray <code>DataArray</code> objects: a scanline and a ground pixel indexer. We can then use them to index our dataset making use of xarray’s <a target="_blank" rel="noopener" href="http://xarray.pydata.org/en/stable/indexing.html#more-advanced-indexing">pointwise indexing</a>.</p>
+<p> Since we are curious people, let’s sneak a peek at the returned <code>index</code> variable:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(rome_index)</span><br></pre></td></tr></table></figure>
+
+<pre><code>(&lt;xarray.DataArray (pixel: 1)&gt;
+array([4])
+Dimensions without coordinates: pixel, &lt;xarray.DataArray (pixel: 1)&gt;
+array([6])
+Dimensions without coordinates: pixel)
+</code></pre>
+<p>There they are, our scanline and ground pixel indexes, buried deep down in our indexers! But we don’t have to care much about the implementation details, xarray will do most of the magic for us.</p>
+<p>What about querying the tree for multiple locations? Let’s add two more cities:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">paris = (<span class="number">48.8566</span>, <span class="number">2.3522</span>)</span><br><span class="line">london = (<span class="number">51.5074</span>, <span class="number">0.1278</span>)</span><br><span class="line">cities_index = ground_pixel_tree.query([rome, paris, london])</span><br><span class="line"><span class="built_in">print</span>(temperatures[cities_index])</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;xarray.DataArray (pixel: 3)&gt;
+array([ 23.641117,  16.257475,  12.801697])
+Coordinates:
+    lat      (pixel) float64 41.98 49.36 51.67
+    lon      (pixel) float64 10.76 2.687 -1.485
+Dimensions without coordinates: pixel
+</code></pre>
+<p>Here we have temperatures and coordinates of the closest ground pixels to our chosen cities.</p>
+<p>We can now easily mark the selected ground pixels on our map:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ax = plt.subplot(projection=ccrs.PlateCarree())</span><br><span class="line">temperatures.plot.pcolormesh(<span class="string">&#x27;lon&#x27;</span>, <span class="string">&#x27;lat&#x27;</span>, ax=ax, infer_intervals=<span class="literal">True</span>);</span><br><span class="line">ax.scatter(temperatures.lon[cities_index], </span><br><span class="line">           temperatures.lat[cities_index], </span><br><span class="line">           marker=<span class="string">&#x27;x&#x27;</span>, color=<span class="string">&#x27;w&#x27;</span>, transform=ccrs.PlateCarree())</span><br><span class="line">ax.coastlines()</span><br><span class="line">ax.gridlines(draw_labels=<span class="literal">True</span>)</span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_29_0.png" class="">
+
+
+<p>That looks great!</p>
+<p>As a cherry on the cake exercise, we could also very easily lookup all ground pixels within a given distance from a reference point, by using the <code>query_ball_point</code> method in SciPy’s KD-tree implementation. </p>
+<p>Let’s find out which ground pixels fall into a 700km radius from Paris:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ball_point_index = ground_pixel_tree.query_ball_point(paris, <span class="number">700</span>)</span><br><span class="line"></span><br><span class="line">ax = plt.subplot(projection=ccrs.PlateCarree())</span><br><span class="line">temperatures.plot.pcolormesh(<span class="string">&#x27;lon&#x27;</span>, <span class="string">&#x27;lat&#x27;</span>, ax=ax, infer_intervals=<span class="literal">True</span>);</span><br><span class="line">ax.scatter(temperatures.lon[ball_point_index], </span><br><span class="line">           temperatures.lat[ball_point_index], </span><br><span class="line">           marker=<span class="string">&#x27;x&#x27;</span>, color=<span class="string">&#x27;w&#x27;</span>, transform=ccrs.PlateCarree())</span><br><span class="line">ax.coastlines()</span><br><span class="line">ax.gridlines(draw_labels=<span class="literal">True</span>)</span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
+
+
+<img src="/2017/12/12/The-quest-to-find-the-closest-ground-pixel/output_31_0.png" class="">
+
+
+<h2 id="Wrapping-up"><a href="#Wrapping-up" class="headerlink" title="Wrapping up"></a>Wrapping up</h2><p>In this post we covered several topics:</p>
+<ul>
+<li>What it means to measure distances on the surface of the earth.</li>
+<li>How to look up the nearest neighbour in a set of points.</li>
+<li>How to do pointwise indexing on an xarray’s <code>DataArray</code>.</li>
+</ul>
+<p>Each of this topics, especially the first two, can be discussed at much greater length. For example, we could have used considered <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Geographical_distance#Tunnel_distance">other ways</a> to measure distances. Or, we could have tried different nearest neighbour search algorithms (this <a target="_blank" rel="noopener" href="https://www.unidata.ucar.edu/blogs/developer/en/entry/accessing_netcdf_data_by_coordinates">article</a> provides a very comprehensive comparison between several approaches).</p>
+<p>But our KD-tree built on transformed coordinates solution should fully (and quickly) satisfy the need to select ground pixels on a two-dimensional grid, based on their distance to a reference point.</p>
+<p>Incidentally, I found out that an xarray’s wrapper for KD-tree <a target="_blank" rel="noopener" href="https://github.com/pydata/xarray/issues/475#issuecomment-125468579">is in the pipeline</a>, but until then, we will happily make use of our little home-brewed solution!</p>
+<p>I hope you enjoyed this post, feel free to comment if you have questions or remarks.</p>
+<p><em>This post was written entirely in the Jupyter notebook. You can download this notebook on my <a target="_blank" rel="noopener" href="https://github.com/stefanomattia/jupyter-notebooks/tree/master/earth-observation">GitHub repository</a>.</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/xarray/" rel="tag"># xarray</a>
+              <a href="/tags/scipy/" rel="tag"># scipy</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/12/05/Sentinel-5P-irradiance-measurement-animation/" rel="prev" title="Sentinel-5P irradiance measurement animation">
+                  <i class="fa fa-chevron-left"></i> Sentinel-5P irradiance measurement animation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/" rel="next" title="Plotting Sentinel-5P NetCDF products with R and ggplot2">
+                  Plotting Sentinel-5P NetCDF products with R and ggplot2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stefano Mattia</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2017/12/12/The-quest-to-find-the-closest-ground-pixel/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

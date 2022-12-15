@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="On February 19, 2018, Indonesia’s Mount Sinabug, a stratovolcano on the island of Sumatra, erupted violently, spewing ash at least 5 to 7 kilometers into the air over Indonesia.   The erupting lava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mount Sinabung eruption as seen by Sentinel-5P">
+<meta property="og:url" content="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/index.html">
+<meta property="og:site_name" content="Space to Ground">
+<meta property="og:description" content="On February 19, 2018, Indonesia’s Mount Sinabug, a stratovolcano on the island of Sumatra, erupted violently, spewing ash at least 5 to 7 kilometers into the air over Indonesia.   The erupting lava">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png">
+<meta property="og:image" content="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png">
+<meta property="article:published_time" content="2018-03-27T12:55:28.000Z">
+<meta property="article:modified_time" content="2018-03-27T13:34:09.000Z">
+<meta property="article:author" content="Stefano Mattia">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="xarray">
+<meta property="article:tag" content="cartopy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png">
+
+
+<link rel="canonical" href="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/","path":"2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/","title":"Mount Sinabung eruption as seen by Sentinel-5P"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mount Sinabung eruption as seen by Sentinel-5P | Space to Ground</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Space to Ground</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Notes from an earth observation engineer's life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment-configuration"><span class="nav-number">1.</span> <span class="nav-text">Environment configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Define-plot-extent"><span class="nav-number">2.</span> <span class="nav-text">Define plot extent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reading-the-data"><span class="nav-number">3.</span> <span class="nav-text">Reading the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Processing-the-data"><span class="nav-number">4.</span> <span class="nav-text">Processing the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plotting-the-data"><span class="nav-number">5.</span> <span class="nav-text">Plotting the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stefano Mattia</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stefanomattia" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stefanomattia" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stefano Mattia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Mount Sinabung eruption as seen by Sentinel-5P | Space to Ground">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mount Sinabung eruption as seen by Sentinel-5P
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2018-03-27 14:55:28 / Modified: 15:34:09" itemprop="dateCreated datePublished" datetime="2018-03-27T14:55:28+02:00">2018-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Earth-Observation/" itemprop="url" rel="index"><span itemprop="name">Earth Observation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png" class="">
+
+<p>On February 19, 2018, Indonesia’s Mount Sinabug, a stratovolcano on the island of Sumatra, erupted violently, spewing ash at least 5 to 7 kilometers into the air over Indonesia.  </p>
+<p>The erupting lava dome obliterated a chunk of the peak as it erupted. Plumes of hot gas and ash rode down the volcano’s summit and spread out in a 5-kilometer diameter, coating surrounding villages in ash. </p>
+<p>In this post, we are going to see how this event has been recorded by the <a target="_blank" rel="noopener" href="http://www.tropomi.eu/">TROPOMI</a> instrument on board of <a target="_blank" rel="noopener" href="http://www.esa.int/">ESA</a>‘s Sentinel-5P earth observation satellite, using Python, xarray, and cartopy </p>
+<span id="more"></span>
+
+<h2 id="Environment-configuration"><a href="#Environment-configuration" class="headerlink" title="Environment configuration"></a>Environment configuration</h2><p>Let’s import out libraries</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> xarray <span class="keyword">as</span> xr</span><br><span class="line"><span class="keyword">import</span> netCDF4 <span class="keyword">as</span> nc</span><br><span class="line"><span class="keyword">from</span> glob <span class="keyword">import</span> iglob</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.colors <span class="keyword">as</span> colors</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> rcParams</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.axes_grid1.colorbar <span class="keyword">import</span> colorbar</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cartopy.crs <span class="keyword">as</span> ccrs</span><br><span class="line"><span class="keyword">import</span> cartopy.feature <span class="keyword">as</span> cfeature</span><br><span class="line"><span class="keyword">from</span> cartopy.feature <span class="keyword">import</span> NaturalEarthFeature</span><br><span class="line"><span class="keyword">from</span> cartopy.mpl.gridliner <span class="keyword">import</span> LONGITUDE_FORMATTER, LATITUDE_FORMATTER</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+<p>Let’s give our plot a bit more of a ESA look by using the ESA font:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># define font family for plots</span></span><br><span class="line">rcParams[<span class="string">&#x27;font.family&#x27;</span>] = <span class="string">&#x27;NotesEsa&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Define-plot-extent"><a href="#Define-plot-extent" class="headerlink" title="Define plot extent"></a>Define plot extent</h2><p>We are going to define our plot extent as square centered around the volcano.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Point = namedtuple(<span class="string">&#x27;Point&#x27;</span>, <span class="string">&#x27;lon lat&#x27;</span>)</span><br><span class="line">sinabung_coords = Point(<span class="number">98.3930</span>, <span class="number">3.169</span>)</span><br><span class="line"></span><br><span class="line">extent_size = <span class="number">4</span></span><br><span class="line">plot_extent = (sinabung_coords.lon-extent_size, </span><br><span class="line">               sinabung_coords.lon+extent_size, </span><br><span class="line">               sinabung_coords.lat-extent_size, </span><br><span class="line">               sinabung_coords.lat+extent_size,)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Plot extent: lon(&#123;&#125;, &#123;&#125;), lat(&#123;&#125;, &#123;&#125;)&quot;</span>.<span class="built_in">format</span>(*plot_extent))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Plot extent: lon(94.393, 102.393), lat(-0.831, 7.1690000000000005)
+</code></pre>
+<h2 id="Reading-the-data"><a href="#Reading-the-data" class="headerlink" title="Reading the data"></a>Reading the data</h2><p>My sample products are usually stored in a structured directory tree. The following line of code recursively looks for all files matching a given filename pattern starting from a root directory.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">input_files_dir = <span class="string">&quot;/Users/stefano/src/s5p/products/SO2_Sinabung/&quot;</span></span><br><span class="line">input_files = <span class="built_in">sorted</span>(<span class="built_in">list</span>(iglob(join(input_files_dir, <span class="string">&#x27;**&#x27;</span>, <span class="string">&#x27;*SO2*.nc&#x27;</span>), recursive=<span class="literal">True</span>)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> counter, input_file <span class="keyword">in</span> <span class="built_in">enumerate</span>(input_files):</span><br><span class="line">    fields = input_file.split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;#&#123;&#125; Orbit: &#123;&#125;, Sensing Start: &#123;&#125;, Sensing Stop: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(counter, fields[<span class="number">11</span>], fields[<span class="number">9</span>], fields[<span class="number">10</span>]))</span><br></pre></td></tr></table></figure>
+
+<pre><code>#0 Orbit: 01814, Sensing Start: 20180218T054902, Sensing Stop: 20180218T073033
+#1 Orbit: 01828, Sensing Start: 20180219T053006, Sensing Stop: 20180219T071137
+#2 Orbit: 01842, Sensing Start: 20180220T051110, Sensing Stop: 20180220T065240
+#3 Orbit: 01843, Sensing Start: 20180220T065240, Sensing Stop: 20180220T083411
+#4 Orbit: 01857, Sensing Start: 20180221T063344, Sensing Stop: 20180221T081515
+#5 Orbit: 01871, Sensing Start: 20180222T061448, Sensing Stop: 20180222T075618
+#6 Orbit: 01885, Sensing Start: 20180223T055552, Sensing Stop: 20180223T073722
+</code></pre>
+<p>Product #1 seems to be covering the day of the eruption. Let’s open it with xarray. I know in advance that the variable of interest (SO<sub>2</sub> total vertical column) is stored in the <code>PRODUCT</code> group, so all we have to do is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">so2tc = xr.open_dataset(input_files[<span class="number">1</span>], group=<span class="string">&#x27;/PRODUCT&#x27;</span>)[<span class="string">&#x27;sulfurdioxide_total_vertical_column&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(so2tc)</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;xarray.DataArray &#39;sulfurdioxide_total_vertical_column&#39; (time: 1, scanline: 3245, ground_pixel: 450)&gt;
+[1460250 values with dtype=float32]
+Coordinates:
+  * scanline      (scanline) float64 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 ...
+  * ground_pixel  (ground_pixel) float64 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 ...
+  * time          (time) datetime64[ns] 2018-02-19
+    latitude      (time, scanline, ground_pixel) float32 ...
+    longitude     (time, scanline, ground_pixel) float32 ...
+Attributes:
+    units:                                                 mol m-2
+    standard_name:                                         atmosphere_mole_co...
+    long_name:                                             total vertical col...
+    multiplication_factor_to_convert_to_DU:                2241.15
+    multiplication_factor_to_convert_to_molecules_percm2:  6.02214e+19
+</code></pre>
+<p>The advantage of storing our data into an xarray DataArray is being able to access xarray’s amazing <a target="_blank" rel="noopener" href="http://xarray.pydata.org/en/stable/indexing.html">indexing, filtering and masking</a> capabilities, something that would require much more effort, should we limited to use the basic NetCDF4 libray instead.</p>
+<h2 id="Processing-the-data"><a href="#Processing-the-data" class="headerlink" title="Processing the data"></a>Processing the data</h2><p>We would like to subset our dataset around our point of interest. To do so, we are going to define a function that takes an xarray’s DataArray and latitude&#x2F;longitude boundaries, and returns a <em>crop</em> of the input dataset. The function relies on the xarray’s filtering function <code>where</code>. Values outside the crop region will be discarded. We assume that both <code>latitude</code> and <code>longitude</code> are actual dimensions in our input dataset.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">subset</span>(<span class="params">so2tc, plot_extent</span>):</span><br><span class="line">    e, w, s, n = plot_extent</span><br><span class="line"></span><br><span class="line">    <span class="comment"># crop data set around point of interest</span></span><br><span class="line">    so2tc = so2tc.where(</span><br><span class="line">        (so2tc.longitude &gt; e) &amp;</span><br><span class="line">        (so2tc.longitude &lt; w) &amp;</span><br><span class="line">        (so2tc.latitude &gt; s) &amp; </span><br><span class="line">        (so2tc.latitude &lt; n), drop=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> so2tc</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">so2tc = subset(so2tc, plot_extent)</span><br></pre></td></tr></table></figure>
+
+<p>Next, we are going to set all negative values to 0, as well as converting the values to Dobson Units.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set all negative values to 0</span></span><br><span class="line">so2tc = so2tc.where(so2tc &gt; <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment"># convert ALL values to DU</span></span><br><span class="line">so2tc = so2tc * so2tc.multiplication_factor_to_convert_to_DU</span><br></pre></td></tr></table></figure>
+
+<p>Easy as pie! </p>
+<p>Our dataset is now ready to be plotted.</p>
+<h2 id="Plotting-the-data"><a href="#Plotting-the-data" class="headerlink" title="Plotting the data"></a>Plotting the data</h2><p>Let’s define a custom color map, with increasing alpha (transparency) level.<br>The idea is that lower values should be more transparent than higher values, following a square root law. Doing so, we prevent lower background values to show up in the plot, and at the same time we emphasize the impact of higher values.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cm_values = np.linspace(<span class="number">0</span>, <span class="number">1</span>, <span class="number">16536</span>)</span><br><span class="line"><span class="comment"># use the Yellow Orange Brown color map as reference</span></span><br><span class="line">alpha_cm = plt.cm.YlOrBr(cm_values)</span><br><span class="line"><span class="comment"># change alpha value to follow a square low</span></span><br><span class="line">alpha_cm[:, -<span class="number">1</span>] = np.sqrt(cm_values)</span><br><span class="line"><span class="comment"># build new color map</span></span><br><span class="line">my_cmap = colors.ListedColormap(alpha_cm)</span><br></pre></td></tr></table></figure>
+
+<p>For sake of convenience, we can define a function that is going to take care of plotting the dataset. We are going to use cartopy’s ability to seamlessly add <a target="_blank" rel="noopener" href="http://www.naturalearthdata.com/">Natural Earth Data</a> features to the plot. In this example, we are going to add state&#x2F;province borders and land features.</p>
+<p>I played a bit with adding Google map’s tiles to the plot background but the results were suboptimal. I raised an <a target="_blank" rel="noopener" href="https://github.com/SciTools/cartopy/issues/1048">issue</a> on cartopy’s github, which so far does not have any practical solution. That’s a bit of a shame and I strongly hope that a solution comes up soon.  </p>
+<p>Note that the actual SO<sub>2</sub> total vertical column plot is performed by the <code>pcolormesh</code> function. The rest is basically bells and whistles. Worthy of mention is the use of a custom colormap normalization, to follow a square root law. In this way, we avoid the higher values to overwhelmingly saturate the plot.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">plot_so2</span>(<span class="params">so2tc</span>):</span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">18</span>, <span class="number">12</span>))</span><br><span class="line"></span><br><span class="line">    ax = plt.axes(projection=ccrs.PlateCarree())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># define Natural Earth features</span></span><br><span class="line">    states_provinces = cfeature.NaturalEarthFeature(</span><br><span class="line">        category=<span class="string">&#x27;cultural&#x27;</span>,</span><br><span class="line">        name=<span class="string">&#x27;admin_0_countries&#x27;</span>,</span><br><span class="line">        scale=<span class="string">&#x27;10m&#x27;</span>,</span><br><span class="line">        facecolor=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    land_10m = cfeature.NaturalEarthFeature(</span><br><span class="line">        category=<span class="string">&#x27;physical&#x27;</span>, </span><br><span class="line">        name=<span class="string">&#x27;land&#x27;</span>, </span><br><span class="line">        scale=<span class="string">&#x27;10m&#x27;</span>,</span><br><span class="line">        edgecolor=<span class="string">&#x27;face&#x27;</span>,</span><br><span class="line">        facecolor=cfeature.COLORS[<span class="string">&#x27;land&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># set map background and features</span></span><br><span class="line">    ax.add_feature(land_10m)</span><br><span class="line">    ax.add_feature(states_provinces, edgecolor=<span class="string">&#x27;lightgray&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># define plot titles, subtitle and caption</span></span><br><span class="line">    ax.text(<span class="number">0</span>, <span class="number">1.05</span>, <span class="string">r&quot;SO$_2$ total vertical column&quot;</span>, fontsize=<span class="number">18</span>, transform=ax.transAxes)</span><br><span class="line">    ax.text(<span class="number">0</span>, <span class="number">1.02</span>, <span class="string">r&quot;Mount Sinabung, Indonesia, &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(so2tc.time.data[<span class="number">0</span>]).split(<span class="string">&#x27;T&#x27;</span>)[<span class="number">0</span>]), </span><br><span class="line">            fontsize=<span class="number">14</span>, transform=ax.transAxes)</span><br><span class="line">    ax.text(<span class="number">0.57</span>, -<span class="number">0.18</span>, <span class="string">r&quot;Data: ESA Sentinel-5P/TROPOMI, Map: Natural Earth Data&quot;</span>, </span><br><span class="line">            fontsize=<span class="number">12</span>, color=<span class="string">&#x27;gray&#x27;</span>, transform=ax.transAxes)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set plot frame color</span></span><br><span class="line">    ax.outline_patch.set_edgecolor(<span class="string">&#x27;lightgray&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># define plot extent</span></span><br><span class="line">    ax.set_extent(plot_extent, ccrs.PlateCarree())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># plot data</span></span><br><span class="line">    im = so2tc.isel(time=<span class="number">0</span>).plot.pcolormesh(ax=ax, </span><br><span class="line">                                            transform=ccrs.PlateCarree(),</span><br><span class="line">                                            infer_intervals=<span class="literal">True</span>,</span><br><span class="line">                                            cmap=my_cmap,</span><br><span class="line">                                            norm=colors.PowerNorm(gamma=<span class="number">1.</span>/<span class="number">2.</span>),</span><br><span class="line">                                            vmin=<span class="number">0</span>,</span><br><span class="line">                                            <span class="comment">#vmax=400,</span></span><br><span class="line">                                            x=<span class="string">&#x27;longitude&#x27;</span>, </span><br><span class="line">                                            y=<span class="string">&#x27;latitude&#x27;</span>, </span><br><span class="line">                                            zorder=<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># plot mt. Sinabung </span></span><br><span class="line">    ax.plot(sinabung_coords.lon, sinabung_coords.lat, marker=<span class="string">&#x27;^&#x27;</span>, </span><br><span class="line">            markeredgewidth=<span class="number">1</span>, markeredgecolor=<span class="string">&#x27;black&#x27;</span>,</span><br><span class="line">            markerfacecolor=<span class="string">&#x27;black&#x27;</span>, markersize=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># remove side colorbar</span></span><br><span class="line">    im.colorbar.remove()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># remove default title</span></span><br><span class="line">    ax.set_title(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set colorbar properties</span></span><br><span class="line">    cbar_ax = fig.add_axes([<span class="number">0.38</span>, <span class="number">0.05</span>, <span class="number">0.25</span>, <span class="number">0.01</span>])</span><br><span class="line">    cbar = plt.colorbar(im, cax=cbar_ax, orientation=<span class="string">&#x27;horizontal&#x27;</span>, ticks=[<span class="number">0</span>, <span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>])</span><br><span class="line">    cbar.set_label(<span class="string">r&quot;SO$_2$ (Dobson Units)&quot;</span>, labelpad=-<span class="number">50</span>, fontsize=<span class="number">14</span>)</span><br><span class="line">    cbar.outline.set_visible(<span class="literal">False</span>)</span><br><span class="line">    cbar.ax.set_yticklabels([<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;100&#x27;</span>, <span class="string">&#x27;200&#x27;</span>, <span class="string">&#x27;300&#x27;</span>, <span class="string">&#x27;400&#x27;</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set gridlines</span></span><br><span class="line">    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=<span class="literal">True</span>,</span><br><span class="line">                      linewidth=<span class="number">1</span>, color=<span class="string">&#x27;gray&#x27;</span>, alpha=<span class="number">0.5</span>, linestyle=<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">    gl.xlabels_top = <span class="literal">False</span></span><br><span class="line">    gl.ylabels_right = <span class="literal">False</span></span><br><span class="line">    gl.xformatter = LONGITUDE_FORMATTER</span><br><span class="line">    gl.yformatter = LATITUDE_FORMATTER</span><br><span class="line"></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>Let’s see it in action:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_so2(so2tc)</span><br></pre></td></tr></table></figure>
+
+<img src="/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/output_27_0.png" class="">
+
+<p>Look at that unprecedented resolution! </p>
+<p>For comparison, have a look at the same scene as seen by NASA’s <a target="_blank" rel="noopener" href="https://earthobservatory.nasa.gov/IOTD/view.php?id=91753">VIIRS</a> instrument, and KNMI’s <a target="_blank" rel="noopener" href="https://so2.gsfc.nasa.gov/pix/daily/ixxxza/loopall5pca_post17.php?yr=18&mo=02&dy=20&bn=sumatra">OMI</a> on board of NASA’s Aura satellite.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In this post, we showed how to use xarray to easily open and filter NetCDF4 files, and how craft a publication ready plot with Matplotlib and cartopy.</p>
+<p>I hope you enjoyed it, and feel free to comment if you have questions or remarks (especially if you managed to properly display Google map’s tiles in a cartopy plot!).</p>
+<p><em>This post was written entirely in a Jupyter notebook. You can download it on my <a target="_blank" rel="noopener" href="https://github.com/stefanomattia/jupyter-notebooks/tree/master/earth-observation">GitHub repository</a>.</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/xarray/" rel="tag"># xarray</a>
+              <a href="/tags/cartopy/" rel="tag"># cartopy</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/02/14/Plotting-Sentinel-5P-NetCDF-products-with-R-and-ggplot2/" rel="prev" title="Plotting Sentinel-5P NetCDF products with R and ggplot2">
+                  <i class="fa fa-chevron-left"></i> Plotting Sentinel-5P NetCDF products with R and ggplot2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/21/Sentinel-5P-S-NPP-and-CH4-products-joint-plot/" rel="next" title="Sentinel-5P S-NPP and CH4 products joint plot">
+                  Sentinel-5P S-NPP and CH4 products joint plot <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stefano Mattia</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://example.com/2018/03/27/Mount-Sinabung-eruption-as-seen-by-Sentinel-5P/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
